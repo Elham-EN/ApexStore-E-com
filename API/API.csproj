@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Holds project-level configuration settings and metadata -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <!-- Enables nullable reference types - compiler warns about potential 
+         null reference exceptions -->
+    <!-- Use string? for nullable, string for non-nullable -->
+    <!-- Helps prevent NullReferenceException at compile time -->
+    <Nullable>enable</Nullable>
+    <!-- Automatically imports common namespaces - no need to write 
+         'using System;' etc. -->
+    <!-- Reduces boilerplate code in every file -->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <!-- Holds collections of project items like files, references, and packages -->
+  <!-- Package References - NuGet packages to install -->
+  <!-- Project References - Links to other projects -->
+  <!-- File Inclusions - Specific files to include/exclude -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
+  </ItemGroup>
+
+</Project>
