@@ -1,9 +1,20 @@
+using API.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container: We can inject them into other classes 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+// Registers StoreContext with dependency injection container
+// Configures database provider to use SQLite
+// Sets connection string from appsettings.json ("DefaultConnection")
+// Makes StoreContext available for injection in controllers/services
+builder.Services.AddDbContext<StoreContext>(opt =>
+{
+    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
