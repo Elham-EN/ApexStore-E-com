@@ -35,4 +35,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 
+// Seeding Data to the Database
+DbInitializer.InitDb(app);
+
 app.Run();
