@@ -1,7 +1,345 @@
 # Build results
-bin/
-obj/
-out/
+API/[Dd]ebug/
+API/[Dd]ebugPublic/
+API/[Rr]elease/
+API/[Rr]eleases/
+API/x64/
+API/x86/
+API/[Aa][Rr][Mm]/
+API/[Aa][Rr][Mm]64/
+API/bld/
+API/[Bb]in/
+API/[Oo]bj/
+API/[Ll]og/
+API/[Ll]ogs/
+
+# Client build results (for future frontend)
+Client/node_modules/
+Client/dist/
+Client/build/
+Client/.parcel-cache/
+Client/coverage/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+API/.vs/
+Client/.vs/
+
+# Visual Studio 2017 auto generated files
+API/Generated\ Files/
+
+# MSTest test Results
+API/[Tt]est[Rr]esult*/
+API/[Bb]uild[Ll]og.*
+
+# NUnit
+API/*.VisualState.xml
+API/TestResult.xml
+API/nunit-*.xml
+
+# Build Results of an ATL Project
+API/[Dd]ebugPS/
+API/[Rr]eleasePS/
+API/dlldata.c
+
+# Benchmark Results
+API/BenchmarkDotNet.Artifacts/
+
+# .NET Core
+API/project.lock.json
+API/project.fragment.lock.json
+API/artifacts/
+
+# StyleCop
+API/StyleCopReport.xml
+
+# Files built by Visual Studio
+API/*_i.c
+API/*_p.c
+API/*_h.h
+API/*.ilk
+API/*.meta
+API/*.obj
+API/*.iobj
+API/*.pch
+API/*.pdb
+API/*.ipdb
+API/*.pgc
+API/*.pgd
+API/*.rsp
+API/*.sbr
+API/*.tlb
+API/*.tli
+API/*.tlh
+API/*.tmp
+API/*.tmp_proj
+API/*_wpftmp.csproj
+API/*.log
+API/*.vspscc
+API/*.vssscc
+API/.builds
+API/*.pidb
+API/*.svclog
+API/*.scc
+
+# Chutzpah Test files
+API/_Chutzpah*
+
+# Visual C++ cache files
+API/ipch/
+API/*.aps
+API/*.ncb
+API/*.opendb
+API/*.opensdf
+API/*.sdf
+API/*.cachefile
+API/*.VC.db
+API/*.VC.VC.opendb
+
+# Visual Studio profiler
+API/*.psess
+API/*.vsp
+API/*.vspx
+API/*.sap
+
+# Visual Studio Trace Files
+API/*.e2e
+
+# TFS 2012 Local Workspace
+API/$tf/
+
+# Guidance Automation Toolkit
+API/*.gpState
+
+# ReSharper is a .NET coding add-in
+API/_ReSharper*/
+API/*.[Rr]e[Ss]harper
+API/*.DotSettings.user
+
+# TeamCity is a build add-in
+API/_TeamCity*
+
+# DotCover is a Code Coverage Tool
+API/*.dotCover
+
+# AxoCover is a Code Coverage Tool
+API/.axoCover/*
+!API/.axoCover/settings.json
+
+# Coverlet is a free, cross platform Code Coverage Tool
+API/coverage*.json
+API/coverage*.xml
+API/coverage*.info
+
+# Visual Studio code coverage results
+API/*.coverage
+API/*.coveragexml
+
+# NCrunch
+API/_NCrunch_*
+API/.*crunch*.local.xml
+API/nCrunchTemp_*
+
+# MightyMoose
+API/*.mm.*
+API/AutoTest.Net/
+
+# Web workbench (sass)
+API/.sass-cache/
+
+# Installshield output folder
+API/[Ee]xpress/
+
+# DocProject is a documentation generator add-in
+API/DocProject/buildhelp/
+API/DocProject/Help/*.HxT
+API/DocProject/Help/*.HxC
+API/DocProject/Help/*.hhc
+API/DocProject/Help/*.hhk
+API/DocProject/Help/*.hhp
+API/DocProject/Help/Html2
+API/DocProject/Help/html
+
+# Click-Once directory
+API/publish/
+
+# Publish Web Output
+API/*.[Pp]ublish.xml
+API/*.azurePubxml
+# Note: Comment the next line if you want to checkin your web deploy settings,
+# but database connection strings (with potential passwords) will be unencrypted
+API/*.pubxml
+API/*.publishproj
+
+# Microsoft Azure Web App publish settings. Comment the next line if you want to
+# checkin your Azure Web App publish settings, but sensitive information contained
+# in these files may be logged.
+API/*.azurePubxml
+
+# Microsoft Azure Build Output
+API/csx/
+API/*.build.csdef
+
+# Microsoft Azure Emulator
+API/ecf/
+API/rcf/
+
+# Windows Store app package directories and files
+API/AppPackages/
+API/BundleArtifacts/
+API/Package.StoreAssociation.xml
+API/_pkginfo.txt
+API/*.appx
+API/*.appxbundle
+API/*.appxupload
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+API/*.[Cc]ache
+# but keep track of directories ending in .cache
+!API/?*.[Cc]ache/
+
+# Others
+API/ClientBin/
+API/~$*
+API/*~
+API/*.dbmdl
+API/*.dbproj.schemaview
+API/*.jfm
+API/*.pfx
+API/*.publishsettings
+API/orleans.codegen.cs
+
+# Including strong name files can present a security risk
+# (https://github.com/github/gitignore/pull/2483#issue-259490424)
+#API/*.snk
+
+# Since there are multiple workflows, uncomment next line to ignore bower_components
+# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
+#API/bower_components/
+
+# RIA/Silverlight projects
+API/Generated_Code/
+
+# Backup & report files from converting an old project file
+# to a newer Visual Studio version. Backup files are not needed,
+# because we have git ;-)
+API/_UpgradeReport_Files/
+API/Backup*/
+API/UpgradeLog*.XML
+API/UpgradeLog*.htm
+API/CDF_UpgradeLog*.xml
+
+# SQL Server files
+API/*.mdf
+API/*.ldf
+API/*.ndf
+
+# Business Intelligence projects
+API/*.rdl.data
+API/*.bim.layout
+API/*.bim_*.settings
+API/*.rptproj.rsuser
+API/*- [Bb]ackup.rdl
+API/*- [Bb]ackup ([0-9]).rdl
+API/*- [Bb]ackup ([0-9][0-9]).rdl
+
+# Microsoft Fakes
+API/FakesAssemblies/
+
+# GhostDoc plugin setting file
+API/*.GhostDoc.xml
+
+# Node.js Tools for Visual Studio
+API/.ntvs_analysis.dat
+API/node_modules/
+
+# Visual Studio 6 build log
+API/*.plg
+
+# Visual Studio 6 workspace options file
+API/*.opt
+
+# Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
+API/*.vbw
+
+# Visual Studio LightSwitch build output
+API/**/*.HTMLClient/GeneratedArtifacts
+API/**/*.DesktopClient/GeneratedArtifacts
+API/**/*.DesktopClient/ModelManifest.xml
+API/**/*.Server/GeneratedArtifacts
+API/**/*.Server/ModelManifest.xml
+API/_Pvt_Extensions
+
+# Paket dependency manager
+API/.paket/paket.exe
+API/paket-files/
+
+# FAKE - F# Make
+API/.fake/
+
+# CodeRush personal settings
+API/.cr/personal
+
+# Python Tools for Visual Studio (PTVS)
+API/__pycache__/
+API/*.pyc
+
+# Cake - Uncomment if you are using it
+# API/tools/**
+# !API/tools/packages.config
+
+# Tabs Studio
+API/*.tss
+
+# Telerik's JustMock configuration file
+API/*.jmconfig
+
+# BizTalk build output
+API/*.btp.cs
+API/*.btm.cs
+API/*.odx.cs
+API/*.xsd.cs
+
+# OpenCover UI analysis results
+API/OpenCover/
+
+# Azure Stream Analytics local run output
+API/ASALocalRun/
+
+# MSBuild Binary and Structured Log
+API/*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+API/*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+API/.mfractor/
+
+# Local History for Visual Studio
+API/.localhistory/
+
+# BeatPulse healthcheck temp database
+API/healthchecksdb
+
+# Backup folder for Package Reference Convert tool in Visual Studio 2017
+API/MigrationBackup/
+
+# Ionide (cross platform F# VS Code tools) working folder
+API/.ionide/
+
+# Fody - auto-generated XML schema
+API/FodyWeavers.xsd
+
+# Entity Framework Core migrations
+API/**/Migrations/
+
+# SQLite database files
+API/*.db
+API/*.db-shm
+API/*.db-wal
+API/*.sqlite
+API/*.sqlite3
 
 # User-specific files
 *.rsuser
@@ -10,93 +348,47 @@ out/
 *.userosscache
 *.sln.docstates
 
-# Visual Studio files
-.vs/
-.vscode/
-*.vcxproj*
-
-# .NET Core
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# NuGet
-*.nupkg
-*.snupkg
-packages/
-# Include packages.config if using packages
-!packages/build/
-
-# Environment variables
+# Environment files
 .env
 .env.local
 .env.production
+.env.staging
+API/.env
+API/.env.local
+API/.env.production
+API/.env.staging
 
-# Configuration files with secrets
-appsettings.*.json
-!appsettings.json
-!appsettings.Development.json
-
-# Database
-*.db
-*.db-*
-*.sqlite
-*.sqlite3
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Dependency directories
-node_modules/
-
-# Optional npm cache directory
-.npm
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# Coverage reports
-coverage/
-*.coverage
-*.coveragexml
-
-# Test results
-TestResults/
-[Tt]est[Rr]esult*/
-*.trx
-
-# Backup files
-*~
-*.tmp
-*.bak
-*.swp
-*.*~
-
-# OS generated files
+# macOS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+.AppleDouble
+.LSOverride
 
 # JetBrains Rider
 .idea/
 *.sln.iml
 
-# Local History for Visual Studio Code
-.history/
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+
+# Front-end (Client folder)
+Client/node_modules/
+Client/npm-debug.log*
+Client/yarn-debug.log*
+Client/yarn-error.log*
+Client/dist/
+Client/build/
+Client/.parcel-cache/
+Client/.next/
+Client/out/
+Client/.nuxt/
+Client/.vuepress/dist
+Client/.serverless/
+Client/.docusaurus/
+Client/.cache/
