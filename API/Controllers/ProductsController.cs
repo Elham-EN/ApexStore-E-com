@@ -2,6 +2,7 @@ using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -17,17 +18,17 @@ namespace API.Controllers
         }
         [HttpGet]
         // Route: https://localhost:5001/api/products
-        public ActionResult<List<Product>> GetListOfProducts()
+        public async Task<ActionResult<List<Product>>> GetListOfProducts()
         {
             // Return all products as a list
-            return _context.Products.ToList();
+            return await _context.Products.ToListAsync();
         }
         // Route: https://localhost:5001/api/products/2
         [HttpGet("id")] // id => route parameter
-        public ActionResult<Product> GetSingleProduct(int id)
+        public async Task<ActionResult<Product>> GetSingleProduct(int id)
         {
             // Finds an entity with the given primary key values
-            var product = _context.Products.Find(id);
+            var product = await _context.Products.FindAsync(id);
 
             // If product do not exist then return notfound 404
             if (product == null) return NotFound();
