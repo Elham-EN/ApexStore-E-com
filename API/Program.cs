@@ -1,6 +1,8 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container: We can inject them into other classes 
@@ -14,6 +16,15 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:3000");
+        });
 });
 
 var app = builder.Build();
@@ -33,9 +44,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.MapControllers();
 
 // Seeding Data to the Database
 DbInitializer.InitDb(app);
+
+
 
 app.Run();
