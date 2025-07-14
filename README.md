@@ -13,7 +13,6 @@
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
-- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
 - [API Documentation](#api-documentation)
 - [Development](#development)
@@ -24,14 +23,6 @@
 
 APex Store is a proof-of-concept e-commerce platform designed specifically for anime and manga enthusiasts. Built with modern web technologies, it provides a seamless shopping experience for customers looking to purchase their favorite anime merchandise, manga volumes, collectibles, and accessories.
 
-### 🎨 What Makes APex Store Special
-
-- **Specialized Catalog**: Curated collection of anime and manga merchandise
-- **Modern UX/UI**: Clean, responsive design with Material Design principles
-- **Secure Payments**: Integrated Stripe payment processing
-- **Real-time Updates**: Live inventory and order status updates
-- **Advanced Search**: Powerful filtering by series, genre, price, and more
-- **Mobile-First**: Optimized for all devices and screen sizes
 
 ## 🛠️ Tech Stack
 
