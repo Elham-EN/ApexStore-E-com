@@ -23,6 +23,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
+            // Allow this origin: React App Client to access the API
             policy.WithOrigins("https://localhost:3000");
         });
 });
@@ -50,7 +51,5 @@ app.MapControllers();
 
 // Seeding Data to the Database
 DbInitializer.InitDb(app);
-
-
 
 app.Run();

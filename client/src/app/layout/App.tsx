@@ -1,9 +1,5 @@
 import React from "react";
-
-type Product = {
-  name: string;
-  price: number;
-};
+import type { Product } from "../models/Product";
 
 function App() {
   const [products, setProducts] = React.useState<Product[]>([]);
@@ -14,7 +10,7 @@ function App() {
         // parsing it to produce a JavaScript object
         response.json()
       )
-      .then((data) => setProducts(data));
+      .then((data) => setProducts(data as Product[]));
   }, []);
 
   return (
