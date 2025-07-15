@@ -13,17 +13,17 @@ API/[Oo]bj/
 API/[Ll]og/
 API/[Ll]ogs/
 
-# Client build results (for future frontend)
-Client/node_modules/
-Client/dist/
-Client/build/
-Client/.parcel-cache/
-Client/coverage/
+# client build results (for future frontend)
+client/node_modules/
+client/dist/
+client/build/
+client/.parcel-cache/
+client/coverage/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 API/.vs/
-Client/.vs/
+client/.vs/
 
 # Visual Studio 2017 auto generated files
 API/Generated\ Files/
@@ -377,18 +377,18 @@ ehthumbs.db
 ehthumbs_vista.db
 *.tmp
 
-# Front-end (Client folder)
-Client/node_modules/
-Client/npm-debug.log*
-Client/yarn-debug.log*
-Client/yarn-error.log*
-Client/dist/
-Client/build/
-Client/.parcel-cache/
-Client/.next/
-Client/out/
-Client/.nuxt/
-Client/.vuepress/dist
-Client/.serverless/
-Client/.docusaurus/
-Client/.cache/
+# Front-end (client folder)
+client/node_modules
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/dist/
+client/build/
+client/.parcel-cache/
+client/.next/
+client/out/
+client/.nuxt/
+client/.vuepress/dist
+client/.serverless/
+client/.docusaurus/
+client/.cache/

@@ -1,6 +1,6 @@
 import React from "react";
-import type { Product } from "../models/Product";
-import Catalog from "../../features/catalog/components/Catalog";
+import type { Product } from "@/app/models/Product";
+import Catalog from "@/features/catalog/components/Catalog";
 import { Container, Typography } from "@mui/material";
 
 function App() {

@@ -1,5 +1,5 @@
 import React from "react";
-import type { Product } from "../../../app/models/Product";
+import type { Product } from "@/app/models/Product";
 
 interface CatalogProps {
   products: Product[];
