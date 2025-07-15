@@ -1,7 +1,7 @@
 import React from "react";
 import type { Product } from "@/app/models/Product";
 import Catalog from "@/features/catalog/components/Catalog";
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 
 function App() {
   const [products, setProducts] = React.useState<Product[]>([]);
@@ -17,9 +17,11 @@ function App() {
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h1" fontSize={"2.5em"}>
-        React Client App: ApexStore
-      </Typography>
+      <Box display={"flex"} justifyContent={"center"} gap={3} marginY={3}>
+        <Typography variant="h1" fontSize={"2.5em"}>
+          React Client App: ApexStore
+        </Typography>
+      </Box>
       <Catalog products={products} />
     </Container>
   );
