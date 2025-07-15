@@ -1,5 +1,7 @@
 import React from "react";
 import type { Product } from "../models/Product";
+import Catalog from "../../features/catalog/components/Catalog";
+import { Container, Typography } from "@mui/material";
 
 function App() {
   const [products, setProducts] = React.useState<Product[]>([]);
@@ -14,20 +16,12 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1 style={{ fontFamily: "sans-serif", fontSize: "2.5rem" }}>
+    <Container maxWidth="xl">
+      <Typography variant="h1" fontSize={"2.5em"}>
         React Client App: ApexStore
-      </h1>
-      <ul>
-        {products &&
-          products.map((product, index) => (
-            <li key={index}>
-              <p> Product Name: {product.name}</p>
-              <p> Product Price: {product.price}</p>
-            </li>
-          ))}
-      </ul>
-    </div>
+      </Typography>
+      <Catalog products={products} />
+    </Container>
   );
 }
 
