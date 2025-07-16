@@ -8,6 +8,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router";
 
 interface Props {
   product: Product;
@@ -45,7 +46,9 @@ function ProductCard({ product }: Props): ReactElement {
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between" }}>
         <Button>Add to card</Button>
-        <Button>View</Button>
+        <Button component={Link} to={`/catalog/${product.id}`}>
+          View
+        </Button>
       </CardActions>
     </Card>
   );
