@@ -1,22 +1,10 @@
-import React from "react";
+import { Outlet } from "react-router";
 import { Box, Container } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
-import type { Product } from "@/app/models/Product";
-import Catalog from "@/features/catalog/components/Catalog";
 import Navbar from "@/app/layout/Navbar";
 
 function App() {
-  const [products, setProducts] = React.useState<Product[]>([]);
   const { mode } = useColorScheme();
-
-  React.useEffect(() => {
-    fetch("https://localhost:7214/api/Products")
-      .then((response) =>
-        // parsing it to produce a JavaScript object
-        response.json()
-      )
-      .then((data) => setProducts(data as Product[]));
-  }, []);
 
   return (
     <>
@@ -32,7 +20,7 @@ function App() {
         }}
       >
         <Container maxWidth="xl" sx={{ mt: 8 }}>
-          <Catalog products={products} />
+          <Outlet />
         </Container>
       </Box>
     </>

@@ -1,7 +1,7 @@
+import React from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
-import React from "react";
-import MaterialUISwitch from "@/components/ThemeSwitch";
+import MaterialUISwitch from "@/app/components/ThemeSwitch";
 
 export default function Navbar(): React.ReactElement {
   const { mode, setMode } = useColorScheme();
