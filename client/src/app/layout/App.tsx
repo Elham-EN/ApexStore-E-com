@@ -1,7 +1,8 @@
 import React from "react";
+import { Container } from "@mui/material";
 import type { Product } from "@/app/models/Product";
 import Catalog from "@/features/catalog/components/Catalog";
-import { Box, Container, Typography } from "@mui/material";
+import Navbar from "@/app/layout/Navbar";
 
 function App() {
   const [products, setProducts] = React.useState<Product[]>([]);
@@ -16,14 +17,12 @@ function App() {
   }, []);
 
   return (
-    <Container maxWidth="xl">
-      <Box display={"flex"} justifyContent={"center"} gap={3} marginY={3}>
-        <Typography variant="h1" fontSize={"2.5em"}>
-          React Client App: ApexStore
-        </Typography>
-      </Box>
-      <Catalog products={products} />
-    </Container>
+    <>
+      <Navbar />
+      <Container maxWidth="xl" sx={{ mt: 14 }}>
+        <Catalog products={products} />
+      </Container>
+    </>
   );
 }
 
