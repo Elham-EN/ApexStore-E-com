@@ -1,20 +1,13 @@
 import React from "react";
-import type { Product } from "@/app/models/Product";
 import ProductList from "@/features/catalog/components/ProductList";
+import { useFetchProductsQuery } from "../catalogApiSlice";
 
 function Catalog(): React.ReactElement {
-  const [products, setProducts] = React.useState<Product[]>([]);
+  const { data, isLoading } = useFetchProductsQuery();
 
-  React.useEffect(() => {
-    fetch("https://localhost:7214/api/Products")
-      .then((response) =>
-        // parsing it to produce a JavaScript object
-        response.json()
-      )
-      .then((data) => setProducts(data as Product[]));
-  }, []);
+  if (isLoading || !data) return <div>Loading...</div>;
 
-  return <ProductList products={products} />;
+  return <ProductList products={data} />;
 }
 
 export default Catalog;
