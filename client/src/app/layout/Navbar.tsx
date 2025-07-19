@@ -4,6 +4,7 @@ import {
   Badge,
   Box,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   Toolbar,
@@ -13,8 +14,11 @@ import { useColorScheme } from "@mui/material/styles";
 import MaterialUISwitch from "@/app/components/ThemeSwitch";
 import { NavLink } from "react-router";
 import { ShoppingCart } from "@mui/icons-material";
+import { useAppSelector } from "../hooks";
 
 export default function Navbar(): React.ReactElement {
+  const { isLoading } = useAppSelector((state) => state.ui);
+
   const { mode, setMode } = useColorScheme();
 
   const midLinks = [
@@ -94,6 +98,11 @@ export default function Navbar(): React.ReactElement {
           </List>
         </Box>
       </Toolbar>
+      {isLoading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress color="secondary" />
+        </Box>
+      )}
     </AppBar>
   );
 }
