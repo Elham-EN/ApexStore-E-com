@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -28,9 +29,19 @@ builder.Services.AddCors(options =>
         });
 });
 
+// This middleware is registered as a transient service in the DI container
+// because it implement the 'IMiddleware' interface and has constructor 
+// dependencies. The transient lifetime ensures that a fresh instance of the
+// middleware is created for each HTTP request for purely stateless operations.
+builder.Services.AddTransient<ExceptionMiddleware>();
+
 var app = builder.Build();
 
 // Middleware: Configure the HTTP request pipeline.
+
+// Usage in the pipeline - positioned first
+app.UseMiddleware<ExceptionMiddleware>(); 
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
