@@ -83,7 +83,7 @@ export const baseQueryWithErrorHandling = async (
       }
       case 404: {
         const notFoundError = data as OtherError;
-        toast.error(notFoundError.title);
+        router.navigate("/not-found", { state: { error: notFoundError } });
         break;
       }
       case 500: {

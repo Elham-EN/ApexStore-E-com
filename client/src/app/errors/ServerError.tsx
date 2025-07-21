@@ -14,7 +14,7 @@ export default function ServerError(): React.ReactElement {
             gutterBottom
             variant="h3"
             sx={{ px: 4, pt: 2 }}
-            color="secondary"
+            color="error"
           >
             {state.error.title}
           </Typography>
@@ -23,6 +23,7 @@ export default function ServerError(): React.ReactElement {
             variant="h5"
             sx={{ p: 4, wordWrap: "break-word", whiteSpace: "normal" }}
             noWrap={false}
+            color="error"
           >
             {state.error.detail}
           </Typography>
