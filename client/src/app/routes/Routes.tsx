@@ -5,6 +5,7 @@ import Catalog from "@/features/catalog/components/Catalog";
 import AboutPage from "@/features/about/AboutPage";
 import ProductDetails from "@/features/catalog/components/ProductDetails";
 import StorePolicyPage from "@/features/storepolicy/StorePolicyPage";
+import ServerError from "../errors/ServerError";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/store-policy",
         element: <StorePolicyPage />,
+      },
+      {
+        path: "/server-error",
+        element: <ServerError />,
       },
     ],
   },

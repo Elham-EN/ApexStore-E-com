@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit/query";
 import { startLoading, stopLoading } from "../layout/uiSlice";
 import { toast } from "react-toastify";
+import { router } from "../routes/Routes";
 
 type BadRequestError = {
   message: string;
@@ -13,6 +14,7 @@ type BadRequestError = {
 type OtherError = {
   status: number;
   title: string;
+  detail: string;
 };
 
 type ValidationError = {
@@ -47,6 +49,9 @@ export const baseQueryWithErrorHandling = async (
   api.dispatch(stopLoading());
   if (result.error) {
     const { status, data } = result.error;
+    console.log("====================================");
+    console.log(result.error);
+    console.log("====================================");
     switch (status) {
       case 400: {
         // Check if it is validation error type
@@ -83,7 +88,10 @@ export const baseQueryWithErrorHandling = async (
       }
       case 500: {
         const serverError = data as OtherError;
-        toast.error(serverError.title);
+        router.navigate("/server-error", {
+          // Send navigation state data to route "/server-error"
+          state: { error: serverError },
+        });
         break;
       }
       default:
