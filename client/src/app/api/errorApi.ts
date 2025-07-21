@@ -25,8 +25,8 @@ export const errorApiSlice = createApi({
 
 export const {
   useLazyGet400ErrorQuery,
-  useGet401ErrorQuery,
-  useGet404ErrorQuery,
+  useLazyGet401ErrorQuery,
+  useLazyGet404ErrorQuery,
   useLazyGet500ErrorQuery,
   useLazyGetValidationErrorQuery,
 } = errorApiSlice;

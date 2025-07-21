@@ -17,7 +17,7 @@ namespace API.Controllers
         [HttpGet("bad-request")]
         public IActionResult GetBadRequest()
         {
-            return BadRequest("This is not a good request");
+            return BadRequest(new {message = "bad request from the client"});
         }
 
         // Client request failed because it lacked valid authentication 
@@ -33,6 +33,8 @@ namespace API.Controllers
         {
             ModelState.AddModelError("Problem1",
                 "This is the first error");
+            ModelState.AddModelError("Problem2",
+                "This is the second error");
             // Returns: { "errors": { "Problem": ["This is the first error"] } } 
             return ValidationProblem();
         }
