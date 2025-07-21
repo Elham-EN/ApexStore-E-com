@@ -49,9 +49,7 @@ export const baseQueryWithErrorHandling = async (
   api.dispatch(stopLoading());
   if (result.error) {
     const { status, data } = result.error;
-    console.log("====================================");
-    console.log(result.error);
-    console.log("====================================");
+
     switch (status) {
       case 400: {
         // Check if it is validation error type
