@@ -18,7 +18,5 @@ namespace API.Models
         public required string Brand { get; set; }
         // INT type can't be null because it value type not reference type
         public int QuantityInStock { get; set; }
-        // Product Principal (parent) = Reference navigation to dependent
-        public BasketItem? BasketItem { get; set; }
     }
 }
