@@ -1,4 +1,5 @@
 using API.Data;
+using API.DTOs;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +16,28 @@ public class BasketController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<Basket>> GetBasket()
+    public async Task<ActionResult<BasketDto>> GetBasket()
     {
         // Get user's shopping basket
         var basket = await RetrieveBasket();
         // Return return empty 204 - NoContent response if no basket 
         if (basket == null) return NoContent();
-        // Return that basket
-        return basket;
+        // Transform basket entity into a (DTO) for API response
+        return new BasketDto
+        {
+            BasketId = basket.BasketId,
+            Items = basket.Items.Select(x => new BasketItemDto
+            {
+                ProductId = x.ProductId,
+                Name = x.Product.Name,
+                Price = x.Product.Price,
+                Brand = x.Product.Brand,
+                Type = x.Product.Type,
+                PictureUrl = x.Product.PictureUrl,
+                Quantity = x.Quantity
+            }).ToList()
+
+        };
     }
     // API endpoint to add products to user's shopping basket
     [HttpPost]
