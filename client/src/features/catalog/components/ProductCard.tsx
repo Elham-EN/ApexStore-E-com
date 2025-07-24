@@ -9,12 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router";
+import { useAddBasketItemMutation } from "@/features/basket/basketApiSlice";
 
 interface Props {
   product: Product;
 }
 
 function ProductCard({ product }: Props): ReactElement {
+  const [addBasketItem, { isLoading }] = useAddBasketItemMutation();
   return (
     <Card
       elevation={3}
@@ -45,7 +47,18 @@ function ProductCard({ product }: Props): ReactElement {
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between" }}>
-        <Button>Add to card</Button>
+        <Button
+          disabled={isLoading}
+          loading={isLoading}
+          onClick={() =>
+            addBasketItem({
+              productId: product.id,
+              quantity: 1,
+            })
+          }
+        >
+          Add to card
+        </Button>
         <Button component={Link} to={`/catalog/${product.id}`}>
           View
         </Button>
