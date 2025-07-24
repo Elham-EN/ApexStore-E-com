@@ -10,5 +10,5 @@ export default function BasketPage(): React.ReactElement {
   if (!data) {
     return <Typography variant="h3">Your basket is empty</Typography>;
   }
-  return <div>BasketPage</div>;
+  return <div>{data && <h2>{data.basketId}</h2>}</div>;
 }

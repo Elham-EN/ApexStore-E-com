@@ -28,6 +28,7 @@ type ValidationError = {
 
 const customBaseQuery = fetchBaseQuery({
   baseUrl: "https://localhost:7214/api",
+  credentials: "include",
 });
 
 // Fake Delay

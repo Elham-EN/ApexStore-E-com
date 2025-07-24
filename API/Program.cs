@@ -25,7 +25,10 @@ builder.Services.AddCors(options =>
         policy =>
         {
             // Allow this origin: React App Client to access the API
-            policy.WithOrigins("https://localhost:3000");
+            policy.WithOrigins("https://localhost:3000")
+                  .AllowCredentials() // ✅  Enable credentials (cookies)
+                  .AllowAnyMethod()   // ✅  Allow all HTTP methods
+                  .AllowAnyHeader();  // ✅ Allow all headers
         });
 });
 

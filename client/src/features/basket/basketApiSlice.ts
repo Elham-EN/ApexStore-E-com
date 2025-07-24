@@ -16,17 +16,17 @@ export const basketApiSlice = createApi({
     }),
     addBasketItem: builder.mutation<Basket, MutateBasketItem>({
       query: ({ productId, quantity }) => ({
-        url: `/Basket?productId=${productId}&quantity${quantity}`,
+        url: `/Basket?productId=${productId}&quantity=${quantity}`,
         method: "POST",
       }),
     }),
     removeBasketItem: builder.mutation<void, MutateBasketItem>({
       query: ({ productId, quantity }) => ({
-        url: `/Basket?productId=${productId}&quantity${quantity}`,
+        url: `/Basket?productId=${productId}&quantity=${quantity}`,
         method: "DELETE",
       }),
     }),
   }),
 });
 
-export const { useFetchBasketQuery } = basketApiSlice;
+export const { useFetchBasketQuery, useAddBasketItemMutation } = basketApiSlice;
