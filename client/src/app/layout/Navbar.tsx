@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 import MaterialUISwitch from "@/app/components/ThemeSwitch";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { ShoppingCart } from "@mui/icons-material";
 import { useAppSelector } from "../hooks";
 
@@ -79,7 +79,7 @@ export default function Navbar(): React.ReactElement {
           ))}
         </List>
         <Box sx={{ display: "flex", gap: 2 }}>
-          <IconButton sx={{ color: "inherit" }}>
+          <IconButton component={Link} to={"/basket"} sx={{ color: "inherit" }}>
             <Badge badgeContent="4" color="secondary">
               <ShoppingCart />
             </Badge>
