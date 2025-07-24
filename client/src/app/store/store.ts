@@ -2,17 +2,20 @@ import { configureStore } from "@reduxjs/toolkit";
 import { catalogApiSlice } from "@/features/catalog/catalogApiSlice";
 import { uiSlice } from "../layout/uiSlice";
 import { errorApiSlice } from "../api/errorApi";
+import { basketApiSlice } from "@/features/basket/basketApiSlice";
 
 export const store = configureStore({
   reducer: {
     [catalogApiSlice.reducerPath]: catalogApiSlice.reducer,
     [errorApiSlice.reducerPath]: errorApiSlice.reducer,
+    [basketApiSlice.reducerPath]: basketApiSlice.reducer,
     ui: uiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       catalogApiSlice.middleware,
-      errorApiSlice.middleware
+      errorApiSlice.middleware,
+      basketApiSlice.middleware
     ),
 });
 
