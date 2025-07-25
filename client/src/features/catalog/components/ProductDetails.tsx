@@ -10,9 +10,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { type ChangeEvent } from "react";
 import { useParams } from "react-router";
 import { useFetchProductQuery } from "../catalogApiSlice";
+import { useAddBasketItemMutation } from "@/features/basket/basketApiSlice";
 
 export default function ProductDetails(): React.ReactElement | undefined {
   const { id } = useParams();
@@ -20,6 +21,11 @@ export default function ProductDetails(): React.ReactElement | undefined {
   const { data: product, isLoading } = useFetchProductQuery(
     id ? Number(id) : 0
   );
+
+  const [addBasketItem, { isLoading: addingToBasket }] =
+    useAddBasketItemMutation();
+
+  const [countQty, setCountQty] = React.useState<number>(1);
 
   if (isLoading || !product) return <div>Loading...</div>;
 
@@ -66,11 +72,22 @@ export default function ProductDetails(): React.ReactElement | undefined {
               type="number"
               label={"Quantity in cart"}
               fullWidth
-              defaultValue={1}
+              onChange={(el: ChangeEvent<HTMLInputElement>) =>
+                setCountQty(Number(el.target.value))
+              }
+              value={countQty}
             />
           </Grid>
           <Grid size={6}>
             <Button
+              disabled={addingToBasket}
+              loading={addingToBasket}
+              onClick={() =>
+                addBasketItem({
+                  productId: product.id,
+                  quantity: countQty,
+                })
+              }
               color="inherit"
               variant="contained"
               fullWidth
