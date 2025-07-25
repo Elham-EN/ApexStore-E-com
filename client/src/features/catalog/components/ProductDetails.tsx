@@ -1,5 +1,6 @@
 import {
   Button,
+  Container,
   Divider,
   Grid,
   Table,
@@ -27,7 +28,14 @@ export default function ProductDetails(): React.ReactElement | undefined {
 
   const [countQty, setCountQty] = React.useState<number>(1);
 
-  if (isLoading || !product) return <div>Loading...</div>;
+  if (isLoading || !product)
+    return (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Typography variant="h5" align="center">
+          Loading product details...
+        </Typography>
+      </Container>
+    );
 
   const productDetails = [
     { label: "Description", value: product.description },
