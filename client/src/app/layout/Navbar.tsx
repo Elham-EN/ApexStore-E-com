@@ -15,11 +15,16 @@ import MaterialUISwitch from "@/app/components/ThemeSwitch";
 import { Link, NavLink } from "react-router";
 import { ShoppingCart } from "@mui/icons-material";
 import { useAppSelector } from "../hooks";
+import { useFetchBasketQuery } from "@/features/basket/basketApiSlice";
 
 export default function Navbar(): React.ReactElement {
   const { isLoading } = useAppSelector((state) => state.ui);
 
   const { mode, setMode } = useColorScheme();
+
+  const { data: basket } = useFetchBasketQuery();
+  const itemCount =
+    basket?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
   const midLinks = [
     { title: "catalog", path: "/catalog" },
@@ -80,7 +85,7 @@ export default function Navbar(): React.ReactElement {
         </List>
         <Box sx={{ display: "flex", gap: 2 }}>
           <IconButton component={Link} to={"/basket"} sx={{ color: "inherit" }}>
-            <Badge badgeContent="4" color="secondary">
+            <Badge badgeContent={itemCount} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>

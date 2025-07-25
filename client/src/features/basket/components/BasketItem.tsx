@@ -2,12 +2,14 @@ import type { BasketItem as Item } from "@/app/models/Basket";
 import { Add, Remove } from "@mui/icons-material";
 import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { type ReactElement } from "react";
+import { useRemoveBasketItemMutation } from "../basketApiSlice";
 
 interface Props {
   item: Item;
 }
 
 export default function BasketItem({ item }: Props): ReactElement {
+  const [removeBasketItem] = useRemoveBasketItemMutation();
   return (
     <Paper
       sx={{
@@ -105,6 +107,9 @@ export default function BasketItem({ item }: Props): ReactElement {
             {/* Quantity Controls */}
             <Box display="flex" alignItems="center" gap={1.5}>
               <IconButton
+                onClick={() =>
+                  removeBasketItem({ productId: item.productId, quantity: 1 })
+                }
                 color="inherit"
                 size="small"
                 sx={{
@@ -146,6 +151,12 @@ export default function BasketItem({ item }: Props): ReactElement {
 
             {/* Delete Button - Mobile */}
             <Typography
+              onClick={() =>
+                removeBasketItem({
+                  productId: item.productId,
+                  quantity: item.quantity,
+                })
+              }
               color="error"
               variant="button"
               sx={{
@@ -179,6 +190,12 @@ export default function BasketItem({ item }: Props): ReactElement {
 
           {/* Delete Button - Desktop */}
           <Typography
+            onClick={() =>
+              removeBasketItem({
+                productId: item.productId,
+                quantity: item.quantity,
+              })
+            }
             color="error"
             variant="button"
             sx={{
