@@ -1,8 +1,9 @@
 import React from "react";
 import { useFetchBasketQuery } from "./basketApiSlice";
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import BasketItem from "@/features/basket/components/BasketItem";
 import OrderSummary from "@/app/components/OrderSummary";
+import CouponCode from "@/app/components/CouponCode";
 
 export default function BasketPage(): React.ReactElement {
   const { data, isLoading } = useFetchBasketQuery();
@@ -39,20 +40,32 @@ export default function BasketPage(): React.ReactElement {
           ))}
         </Grid>
 
-        {/* Order summary section - fixed on desktop, normal on mobile */}
+        {/* Order summary and coupon section - sticky on desktop */}
         <Grid
           size={{
             xs: 12, // Full width on mobile (below items)
             md: 4, // 1/3 width on desktop (sidebar)
           }}
-          sx={{
-            // Create space for fixed positioning on desktop
-            position: { xs: "static", md: "relative" },
-            height: { xs: "auto", md: "fit-content" },
-          }}
         >
-          {/* Future: Order summary, checkout button, etc. */}
-          <OrderSummary items={data.items} />
+          {/* Container for sticky behavior */}
+          <Box
+            sx={{
+              position: { xs: "static", md: "sticky" },
+              // ✅ Increased from 20 to 80px to give space from top
+              top: { md: 80 },
+              zIndex: 100,
+              // Add some spacing from viewport edges
+              pt: { md: 2 },
+            }}
+          >
+            {/* Order Summary */}
+            <OrderSummary items={data.items} />
+
+            {/* Coupon Code - positioned below OrderSummary */}
+            <Box sx={{ mt: 2 }}>
+              <CouponCode />
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     </Container>

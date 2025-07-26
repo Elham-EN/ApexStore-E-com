@@ -1,5 +1,5 @@
 import { currencyFormat } from "@/lib/util";
-import { Box, Divider, Paper, Typography } from "@mui/material";
+import { Box, Button, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 import OrderSummaryRow from "./OrderSummaryRow";
 import type { BasketItem } from "../models/Basket";
@@ -25,19 +25,6 @@ function OrderSummary({ items }: OrderSummaryProps): React.ReactElement {
         borderRadius: 3,
         p: { xs: 2.5, sm: 3 },
         mb: { xs: 2, md: 0 }, // Margin only on mobile
-        // Fixed positioning on desktop, normal on mobile
-        position: {
-          xs: "static", // Normal flow on mobile
-          md: "fixed", // Fixed position on desktop
-        },
-        width: {
-          xs: "100%", // Full width on mobile
-          // 1/3 width minus container padding on desktop
-          md: "calc(33.333% - 48px)",
-        },
-        maxWidth: { md: 400 }, // Max width to prevent it getting too wide
-        // Ensure it stays above other content
-        zIndex: 1000,
       }}
     >
       <Box>
@@ -68,6 +55,12 @@ function OrderSummary({ items }: OrderSummaryProps): React.ReactElement {
             value={currencyFormat(total)}
             isTotal
           />
+        </Box>
+        <Box mt={2}>
+          <Button variant="contained" color="primary" fullWidth sx={{ mb: 1 }}>
+            Checkout
+          </Button>
+          <Button fullWidth>Continue Shopping</Button>
         </Box>
       </Box>
     </Paper>
