@@ -6,6 +6,7 @@ import {
   useAddBasketItemMutation,
   useRemoveBasketItemMutation,
 } from "../basketApiSlice";
+import { currencyFormat } from "@/lib/util";
 
 interface Props {
   item: Item;
@@ -84,7 +85,7 @@ export default function BasketItem({ item }: Props): ReactElement {
                 mb: { xs: 0.5, sm: 0 },
               }}
             >
-              ${(item.price / 100).toFixed(2)} each
+              {currencyFormat(item.price)} each
             </Typography>
           </Box>
         </Box>
@@ -192,7 +193,7 @@ export default function BasketItem({ item }: Props): ReactElement {
               mt: { xs: 0, sm: 2 },
             }}
           >
-            Total: ${((item.price / 100) * item.quantity).toFixed(2)}
+            Total: {currencyFormat(item.price * item.quantity)}
           </Typography>
 
           {/* Delete Button - Desktop */}

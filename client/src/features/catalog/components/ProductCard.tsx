@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router";
 import { useAddBasketItemMutation } from "@/features/basket/basketApiSlice";
+import { currencyFormat } from "@/lib/util";
 
 interface Props {
   product: Product;
@@ -43,7 +44,7 @@ function ProductCard({ product }: Props): ReactElement {
           {product.name}
         </Typography>
         <Typography variant="h6" sx={{ color: "secondary.main" }}>
-          ${(product.price / 100).toFixed(2)}
+          {currencyFormat(product.price)}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-between" }}>
