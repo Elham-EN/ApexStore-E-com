@@ -16,7 +16,7 @@ namespace API.Controllers
         [HttpGet]
         // Route: https://localhost:5001/api/products
         public async Task<ActionResult<List<Product>>> GetListOfProducts(
-            string orderBy)
+            string? orderBy, string? searchTerm)
         {
             // Create a queryable object from the Products table in the 
             // database. This allows us to build and chain query operations 
@@ -24,7 +24,10 @@ namespace API.Controllers
             // database query for better performance.
             // Deferred execution: The query doesn't run immediately - 
             // you can add more conditions first
-            var query = _context.Products.Sort(orderBy).AsQueryable();
+            var query = _context.Products
+                .Sort(orderBy)
+                .Search(searchTerm)
+                .AsQueryable();
 
 
             // Return all products as a list from the database

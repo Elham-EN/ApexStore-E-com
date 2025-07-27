@@ -20,4 +20,15 @@ public static class ProductExtension
         };
         return query;
     }
+
+    public static IQueryable<Product> Search(this IQueryable<Product> query,
+        string? searchTerm)
+    {
+        // Return query without doing anything if search term is null
+        if (string.IsNullOrEmpty(searchTerm)) return query;
+        // Convert search term to lowercase & remove whitespace
+        var lowerCaseSearchTerm = searchTerm.Trim().ToLower();
+        // Return any products that match the search terms
+        return query.Where(x => x.Name.ToLower().Contains(lowerCaseSearchTerm));
+    }
 }
