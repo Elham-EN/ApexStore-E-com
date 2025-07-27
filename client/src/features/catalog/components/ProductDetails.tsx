@@ -85,70 +85,6 @@ export default function ProductDetails(): React.ReactElement | undefined {
     { label: "Quantity in stock", value: product.quantityInStock },
   ];
 
-  // return (
-  //   <Grid container spacing={6} maxWidth={"lg"} sx={{ mx: "auto" }}>
-  //     <Grid size={6}>
-  //       <img
-  //         src={product?.pictureUrl}
-  //         alt={product?.name}
-  //         style={{ width: "100%" }}
-  //       />
-  //     </Grid>
-  //     <Grid size={6}>
-  //       <Typography variant="h3">{product.name}</Typography>
-  //       <Divider sx={{ mb: 2 }} />
-  //       <Typography variant="h4">
-  //         ${(product.price / 100).toFixed(2)}
-  //       </Typography>
-  //       <TableContainer>
-  //         <Table sx={{ "& td": { fontSize: "1rem" } }}>
-  //           <TableBody>
-  //             {productDetails.map((detail, index) => (
-  //               <TableRow key={index}>
-  //                 <TableCell sx={{ fontWeight: "bold" }}>
-  //                   {detail.label}
-  //                 </TableCell>
-  //                 <TableCell>{detail.value}</TableCell>
-  //               </TableRow>
-  //             ))}
-  //           </TableBody>
-  //         </Table>
-  //       </TableContainer>
-  //       <Grid container spacing={2} marginTop={5} alignItems={"center"}>
-  //         <Grid size={6}>
-  //           <TextField
-  //             variant="outlined"
-  //             type="number"
-  //             label={"Quantity in cart"}
-  //             fullWidth
-  //             onChange={handleInputChange}
-  //             value={countQty}
-  //           />
-  //         </Grid>
-  //         <Grid size={6}>
-  //           <Button
-  //             disabled={
-  //               // Disable: nothing changed
-  //               countQty === item?.quantity ||
-  //               // Or there is no item in the basket
-  //               (!item &&
-  //                 // And the quantity is 0
-  //                 countQty === 0)
-  //             }
-  //             loading={addingToBasket || removingBasketItem}
-  //             onClick={() => handleUpdateBasket()}
-  //             color="primary"
-  //             variant="contained"
-  //             fullWidth
-  //             sx={{ height: "54px" }}
-  //           >
-  //             {item ? "Update quantity" : "Add to basket"}
-  //           </Button>
-  //         </Grid>
-  //       </Grid>
-  //     </Grid>
-  //   </Grid>
-  // );
   return (
     <Container maxWidth="xl" sx={{ py: { xs: 2, md: 4 } }}>
       <Grid container spacing={{ xs: 3, md: 6 }}>
@@ -159,7 +95,6 @@ export default function ProductDetails(): React.ReactElement | undefined {
             sx={{
               width: "100%",
               mb: 4,
-              borderRadius: 2,
               p: { xs: 2, md: 3 },
               display: "flex",
               alignItems: "center",
@@ -175,6 +110,7 @@ export default function ProductDetails(): React.ReactElement | undefined {
                 height: "auto",
                 maxWidth: "600px",
                 objectFit: "contain",
+                borderRadius: 4,
               }}
             />
           </Box>
@@ -282,7 +218,7 @@ export default function ProductDetails(): React.ReactElement | undefined {
               }}
             >
               <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-                Add to Cart
+                Add to Basket
               </Typography>
 
               <Grid container spacing={2} alignItems="flex-end">
@@ -294,11 +230,6 @@ export default function ProductDetails(): React.ReactElement | undefined {
                     fullWidth
                     onChange={handleInputChange}
                     value={countQty}
-                    inputProps={{
-                      min: 0,
-                      max: product.quantityInStock,
-                      step: 1,
-                    }}
                   />
                 </Grid>
 
@@ -313,7 +244,12 @@ export default function ProductDetails(): React.ReactElement | undefined {
                     variant="contained"
                     fullWidth
                     size="large"
-                    sx={{ height: 56 }}
+                    sx={{
+                      height: 56,
+                      ":hover": {
+                        color: "#ffffff",
+                      },
+                    }}
                   >
                     {item ? "Update quantity" : "Add to basket"}
                   </Button>

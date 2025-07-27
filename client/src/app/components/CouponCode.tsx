@@ -20,7 +20,17 @@ export default function CouponCode(): React.ReactElement {
           fullWidth
           sx={{ my: 2 }}
         />
-        <Button type="submit" variant="contained" fullWidth color="primary">
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          color="primary"
+          sx={{
+            ":hover": {
+              color: "#ffffff",
+            },
+          }}
+        >
           Apply code
         </Button>
       </form>

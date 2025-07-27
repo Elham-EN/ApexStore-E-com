@@ -3,6 +3,7 @@ import { Box, Button, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 import OrderSummaryRow from "./OrderSummaryRow";
 import type { BasketItem } from "../models/Basket";
+import { Link } from "react-router";
 
 interface OrderSummaryProps {
   items: BasketItem[];
@@ -57,10 +58,24 @@ function OrderSummary({ items }: OrderSummaryProps): React.ReactElement {
           />
         </Box>
         <Box mt={2}>
-          <Button variant="contained" color="primary" fullWidth sx={{ mb: 1 }}>
+          <Button
+            component={Link}
+            to="/checkout"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{
+              mb: 1,
+              ":hover": {
+                color: "#ffffff",
+              },
+            }}
+          >
             Checkout
           </Button>
-          <Button fullWidth>Continue Shopping</Button>
+          <Button component={Link} to={"/catalog"} fullWidth>
+            Continue Shopping
+          </Button>
         </Box>
       </Box>
     </Paper>
