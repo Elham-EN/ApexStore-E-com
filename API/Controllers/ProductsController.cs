@@ -1,6 +1,7 @@
 using API.Data;
 using API.Extensions;
 using API.Models;
+using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ namespace API.Controllers
         [HttpGet]
         // Route: https://localhost:5001/api/products
         public async Task<ActionResult<List<Product>>> GetListOfProducts(
-            string? orderBy, string? searchTerm)
+            [FromQuery]ProductParams productParams)
         {
             // Create a queryable object from the Products table in the 
             // database. This allows us to build and chain query operations 
@@ -25,10 +26,10 @@ namespace API.Controllers
             // Deferred execution: The query doesn't run immediately - 
             // you can add more conditions first
             var query = _context.Products
-                .Sort(orderBy)
-                .Search(searchTerm)
+                .Sort(productParams.OrderBy)
+                .Search(productParams.SearchTerm)
+                .Filter(productParams.Brands, productParams.Types)
                 .AsQueryable();
-
 
             // Return all products as a list from the database
             return await query.ToListAsync();
