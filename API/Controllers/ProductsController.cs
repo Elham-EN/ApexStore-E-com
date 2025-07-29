@@ -3,7 +3,7 @@ using API.Extensions;
 using API.Models;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace API.Controllers
 {
@@ -31,8 +31,12 @@ namespace API.Controllers
                 .Filter(productParams.Brands, productParams.Types)
                 .AsQueryable();
 
-            // Return all products as a list from the database
-            return await query.ToListAsync();
+            var products = await PagedList<Product>.ToPagedList(query,
+                productParams.PageNumber, productParams.Pagesize);
+
+            Response.AddPaginationHeader(products.Metadata);
+
+            return products;
         }
         // Route: https://localhost:5001/api/products/2
         [HttpGet("id")] // id => route parameter
