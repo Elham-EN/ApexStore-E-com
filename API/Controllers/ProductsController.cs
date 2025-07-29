@@ -3,6 +3,7 @@ using API.Extensions;
 using API.Models;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace API.Controllers
@@ -17,7 +18,7 @@ namespace API.Controllers
         [HttpGet]
         // Route: https://localhost:5001/api/products
         public async Task<ActionResult<List<Product>>> GetListOfProducts(
-            [FromQuery]ProductParams productParams)
+            [FromQuery] ProductParams productParams)
         {
             // Create a queryable object from the Products table in the 
             // database. This allows us to build and chain query operations 
@@ -49,6 +50,24 @@ namespace API.Controllers
             if (product == null) return NotFound();
 
             return product;
+        }
+
+        [HttpGet("filters")]
+        public async Task<IActionResult> GetFilters()
+        {
+            var brands = await _context.Products
+                .Select(x => x.Brand)
+                // Remove duplicate brand names, keep only unique ones
+                .Distinct()
+                .ToListAsync();
+
+            var types = await _context.Products
+                .Select(x => x.Type)
+                // Remove duplicate brand names, keep only unique ones
+                .Distinct()
+                .ToListAsync();
+
+            return Ok(new {brands, types});
         }
     }
 } 
