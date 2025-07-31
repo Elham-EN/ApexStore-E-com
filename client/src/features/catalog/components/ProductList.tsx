@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import type { Product } from "@/app/models/Product";
 import ProductCard from "@/features/catalog/components/ProductCard";
 
@@ -9,19 +9,18 @@ interface Props {
 
 function ProductList({ products }: Props): React.ReactElement {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 3,
-        justifyContent: "center",
-      }}
-    >
+    <Grid container spacing={{ xs: 2, md: 3 }}>
       {products &&
         products.map((product, index) => (
-          <ProductCard key={index} product={product} />
+          <Grid
+            size={{ xs: 6, sm: 6, md: 4, lg: 3 }}
+            display={"flex"}
+            justifyContent="center"
+          >
+            <ProductCard key={index} product={product} />
+          </Grid>
         ))}
-    </Box>
+    </Grid>
   );
 }
 

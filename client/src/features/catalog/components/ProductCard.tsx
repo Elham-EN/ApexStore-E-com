@@ -22,7 +22,8 @@ function ProductCard({ product }: Props): ReactElement {
     <Card
       elevation={3}
       sx={{
-        width: 280,
+        width: "100%",
+        maxWidth: 280,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
