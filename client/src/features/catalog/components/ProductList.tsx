@@ -16,8 +16,9 @@ function ProductList({ products }: Props): React.ReactElement {
             size={{ xs: 6, sm: 6, md: 4, lg: 3 }}
             display={"flex"}
             justifyContent="center"
+            key={index}
           >
-            <ProductCard key={index} product={product} />
+            <ProductCard product={product} />
           </Grid>
         ))}
     </Grid>
