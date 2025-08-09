@@ -18,10 +18,10 @@ function Catalog(): React.ReactElement {
 
   return (
     <Grid container spacing={4}>
-      <Grid size={{ xs: 12, md: 3 }}>
+      <Grid size={{ sm: 12, lg: 3 }} width={"100%"}>
         <Filters />
       </Grid>
-      <Grid size={{ xs: 12, md: 9 }}>
+      <Grid size={{ sm: 12, lg: 9 }}>
         <ProductList products={data} />
       </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-import { ArrowDownwardOutlined } from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -27,7 +27,7 @@ export default function SortingAccordion({
 }: SortingAccordionProps): React.ReactElement {
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ArrowDownwardOutlined fontSize="small" />}>
+      <AccordionSummary expandIcon={<ExpandMore />}>
         <Typography>{name}</Typography>
       </AccordionSummary>
       <AccordionDetails>

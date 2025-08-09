@@ -9,7 +9,7 @@ import {
   FormGroup,
   Typography,
 } from "@mui/material";
-import { ArrowDownwardOutlined } from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 
 interface FilterAccordionProps {
   list: string[] | undefined;
@@ -22,7 +22,7 @@ export default function FilterAccordion({
 }: FilterAccordionProps): React.ReactElement {
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ArrowDownwardOutlined fontSize="small" />}>
+      <AccordionSummary expandIcon={<ExpandMore />}>
         <Typography>{name}</Typography>
       </AccordionSummary>
       <AccordionDetails>
