@@ -4,6 +4,9 @@ import { useFetchFiltersQuery } from "../catalogApiSlice";
 import FilterAccordion from "./FilterAccordion";
 import SortingAccordion from "./SortingAccordion";
 import Search from "./Search";
+import { useAppSelector } from "@/app/hooks";
+import { useDispatch } from "react-redux";
+import { setOrderBy } from "../catalogSlice";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -13,6 +16,8 @@ const sortOptions = [
 
 export default function Filters(): React.ReactElement {
   const { data } = useFetchFiltersQuery();
+  const product = useAppSelector((state) => state.catalog);
+  const dispatch = useDispatch();
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={3}>
@@ -20,7 +25,12 @@ export default function Filters(): React.ReactElement {
         <Search />
       </Paper>
       <Paper>
-        <SortingAccordion name="Sort" sortOptions={sortOptions} />
+        <SortingAccordion
+          label="Sort"
+          options={sortOptions}
+          selectedValue={product.orderBy}
+          onChange={(event) => dispatch(setOrderBy(event.target.value))}
+        />
       </Paper>
       <Paper>
         <FilterAccordion name="Brands" list={data?.brands} />

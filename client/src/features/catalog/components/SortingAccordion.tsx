@@ -9,7 +9,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { type ChangeEvent } from "react";
 
 type SortOption = {
   value: string;
@@ -17,26 +17,30 @@ type SortOption = {
 };
 
 interface SortingAccordionProps {
-  name: string;
-  sortOptions: SortOption[];
+  label: string;
+  options: SortOption[];
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  selectedValue: string;
 }
 
 export default function SortingAccordion({
-  name,
-  sortOptions,
+  label,
+  options,
+  onChange,
+  selectedValue,
 }: SortingAccordionProps): React.ReactElement {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMore />}>
-        <Typography>{name}</Typography>
+        <Typography>{label}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <FormControl>
-          <RadioGroup>
-            {sortOptions.map(({ value, label }) => (
+          <RadioGroup onChange={onChange} value={selectedValue}>
+            {options.map(({ value, label }) => (
               <FormControlLabel
                 key={label}
-                control={<Radio />}
+                control={<Radio color="secondary" />}
                 label={label}
                 value={value}
               />
