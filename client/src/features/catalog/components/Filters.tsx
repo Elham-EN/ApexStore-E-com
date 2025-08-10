@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useFetchFiltersQuery } from "../catalogApiSlice";
 import FilterAccordion from "./FilterAccordion";
@@ -6,7 +6,7 @@ import SortingAccordion from "./SortingAccordion";
 import Search from "./Search";
 import { useAppSelector } from "@/app/hooks";
 import { useDispatch } from "react-redux";
-import { setOrderBy } from "../catalogSlice";
+import { setBrands, setOrderBy, setTypes } from "../catalogSlice";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -18,6 +18,15 @@ export default function Filters(): React.ReactElement {
   const { data } = useFetchFiltersQuery();
   const product = useAppSelector((state) => state.catalog);
   const dispatch = useDispatch();
+
+  if (!data?.brands || !data.types)
+    return (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Typography variant="h5" align="center">
+          Loading...
+        </Typography>
+      </Container>
+    );
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={3}>
@@ -33,10 +42,20 @@ export default function Filters(): React.ReactElement {
         />
       </Paper>
       <Paper>
-        <FilterAccordion name="Brands" list={data?.brands} />
+        <FilterAccordion
+          name="Brands"
+          items={data.brands}
+          checked={product.brands}
+          onChange={(items: string[]) => dispatch(setBrands(items))}
+        />
       </Paper>
       <Paper>
-        <FilterAccordion name="Types" list={data?.types} />
+        <FilterAccordion
+          name="Types"
+          items={data.types}
+          checked={product.types}
+          onChange={(items: string[]) => dispatch(setTypes(items))}
+        />
       </Paper>
     </Box>
   );
