@@ -4,10 +4,14 @@ import { useFetchProductsQuery } from "../catalogApiSlice";
 import { Container, Grid, Typography } from "@mui/material";
 import Filters from "./Filters";
 import { useAppSelector } from "@/app/hooks";
+import AppPagination from "@/app/components/AppPagination";
+import { useDispatch } from "react-redux";
+import { setPageNumber } from "../catalogSlice";
 
 function Catalog(): React.ReactElement {
   const productParams = useAppSelector((state) => state.catalog);
   const { data, isLoading } = useFetchProductsQuery(productParams);
+  const dispatch = useDispatch();
 
   if (isLoading || !data)
     return (
@@ -24,7 +28,11 @@ function Catalog(): React.ReactElement {
         <Filters />
       </Grid>
       <Grid size={{ sm: 12, lg: 9 }}>
-        <ProductList products={data} />
+        <ProductList products={data.productItems} />
+        <AppPagination
+          metadata={data.pagination}
+          onPageChange={(page: number) => dispatch(setPageNumber(page))}
+        />
       </Grid>
     </Grid>
   );
