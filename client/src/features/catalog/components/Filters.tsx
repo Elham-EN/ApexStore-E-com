@@ -1,8 +1,9 @@
-import { Box, Paper, TextField } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import React from "react";
 import { useFetchFiltersQuery } from "../catalogApiSlice";
 import FilterAccordion from "./FilterAccordion";
 import SortingAccordion from "./SortingAccordion";
+import Search from "./Search";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -12,10 +13,11 @@ const sortOptions = [
 
 export default function Filters(): React.ReactElement {
   const { data } = useFetchFiltersQuery();
+
   return (
     <Box display={"flex"} flexDirection={"column"} gap={3}>
       <Paper>
-        <TextField label="Search product" variant="outlined" fullWidth />
+        <Search />
       </Paper>
       <Paper>
         <SortingAccordion name="Sort" sortOptions={sortOptions} />
