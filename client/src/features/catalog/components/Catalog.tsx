@@ -28,11 +28,21 @@ function Catalog(): React.ReactElement {
         <Filters />
       </Grid>
       <Grid size={{ sm: 12, lg: 9 }}>
-        <ProductList products={data.productItems} />
-        <AppPagination
-          metadata={data.pagination}
-          onPageChange={(page: number) => dispatch(setPageNumber(page))}
-        />
+        {data.productItems && data.productItems.length > 0 ? (
+          <>
+            <ProductList products={data.productItems} />
+            <AppPagination
+              metadata={data.pagination}
+              onPageChange={(page: number) => dispatch(setPageNumber(page))}
+            />
+          </>
+        ) : (
+          <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Typography variant="h5" align="center">
+              There are not products for this filter
+            </Typography>
+          </Container>
+        )}
       </Grid>
     </Grid>
   );
