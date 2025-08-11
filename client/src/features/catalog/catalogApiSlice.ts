@@ -5,7 +5,7 @@ import type { ProductParams } from "@/app/models/ProductParams";
 import { filterEmptyValuesFromObj } from "@/lib/util";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-type Filters = {
+export type FiltersType = {
   brands: string[];
   types: string[];
 };
@@ -40,7 +40,7 @@ export const catalogApiSlice = createApi({
     fetchProduct: builder.query<Product, number>({
       query: (productId) => `/Products/id?id=${productId}`,
     }),
-    fetchFilters: builder.query<Filters, void>({
+    fetchFilters: builder.query<FiltersType, void>({
       query: () => "products/filters",
     }),
   }),

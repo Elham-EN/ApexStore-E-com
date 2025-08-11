@@ -1,6 +1,9 @@
 import React from "react";
 import ProductList from "@/features/catalog/components/ProductList";
-import { useFetchProductsQuery } from "../catalogApiSlice";
+import {
+  useFetchFiltersQuery,
+  useFetchProductsQuery,
+} from "../catalogApiSlice";
 import { Container, Grid, Typography } from "@mui/material";
 import Filters from "./Filters";
 import { useAppSelector } from "@/app/hooks";
@@ -11,9 +14,11 @@ import { setPageNumber } from "../catalogSlice";
 function Catalog(): React.ReactElement {
   const productParams = useAppSelector((state) => state.catalog);
   const { data, isLoading } = useFetchProductsQuery(productParams);
+  const { data: filterData, isLoading: filtersLoading } =
+    useFetchFiltersQuery();
   const dispatch = useDispatch();
 
-  if (isLoading || !data)
+  if (isLoading || !data || filtersLoading || !filterData)
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Typography variant="h5" align="center">
@@ -25,7 +30,7 @@ function Catalog(): React.ReactElement {
   return (
     <Grid container spacing={4}>
       <Grid size={{ sm: 12, lg: 3 }} width={"100%"}>
-        <Filters />
+        <Filters filterData={filterData} />
       </Grid>
       <Grid size={{ sm: 12, lg: 9 }}>
         {data.productItems && data.productItems.length > 0 ? (

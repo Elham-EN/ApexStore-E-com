@@ -1,6 +1,6 @@
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React from "react";
-import { useFetchFiltersQuery } from "../catalogApiSlice";
+import { type FiltersType } from "../catalogApiSlice";
 import FilterAccordion from "./FilterAccordion";
 import SortingAccordion from "./SortingAccordion";
 import Search from "./Search";
@@ -14,8 +14,11 @@ const sortOptions = [
   { value: "price", label: "Price: Low - High" },
 ];
 
-export default function Filters(): React.ReactElement {
-  const { data } = useFetchFiltersQuery();
+interface FiltersProps {
+  filterData: FiltersType;
+}
+
+function Filters({ filterData: data }: FiltersProps): React.ReactElement {
   const product = useAppSelector((state) => state.catalog);
   const dispatch = useDispatch();
 
@@ -61,3 +64,5 @@ export default function Filters(): React.ReactElement {
     </Box>
   );
 }
+
+export default Filters;
