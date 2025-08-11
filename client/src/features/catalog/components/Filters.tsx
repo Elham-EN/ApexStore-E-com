@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useFetchFiltersQuery } from "../catalogApiSlice";
 import FilterAccordion from "./FilterAccordion";
@@ -6,7 +6,7 @@ import SortingAccordion from "./SortingAccordion";
 import Search from "./Search";
 import { useAppSelector } from "@/app/hooks";
 import { useDispatch } from "react-redux";
-import { setBrands, setOrderBy, setTypes } from "../catalogSlice";
+import { resetParams, setBrands, setOrderBy, setTypes } from "../catalogSlice";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -57,6 +57,7 @@ export default function Filters(): React.ReactElement {
           onChange={(items: string[]) => dispatch(setTypes(items))}
         />
       </Paper>
+      <Button onClick={() => dispatch(resetParams())}>Reset Filters</Button>
     </Box>
   );
 }
