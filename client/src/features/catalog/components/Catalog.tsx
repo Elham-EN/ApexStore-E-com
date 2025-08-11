@@ -33,7 +33,10 @@ function Catalog(): React.ReactElement {
             <ProductList products={data.productItems} />
             <AppPagination
               metadata={data.pagination}
-              onPageChange={(page: number) => dispatch(setPageNumber(page))}
+              onPageChange={(page: number) => {
+                dispatch(setPageNumber(page));
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             />
           </>
         ) : (
