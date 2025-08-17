@@ -22,14 +22,20 @@ namespace API.Data
         // Customize the model for identity
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // Default Identity model configurations
             base.OnModelCreating(builder);
+            // Default roles added to the database when it's created:
             builder.Entity<IdentityRole>().HasData(
+                // Creates a "Member" role with a specific ID
                 new IdentityRole
                 {
                     Id = "03bcffa9-233f-4599-bb71-769511f8a74a",
+                    // Role name (shown to users)
                     Name = "Member",
-                    NormalizedName = "MEMBER"
-                }, 
+                    // Uppercase version for consistent lookups
+                    NormalizedName = "MEMBER" 
+                },
+                // Creates an "Admin" role with a different ID 
                 new IdentityRole
                 {
                     Id = "5f1f102e-cabd-4259-90fb-e9e7d708a1e3",

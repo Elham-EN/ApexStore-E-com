@@ -1,5 +1,5 @@
-
 using API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -7,7 +7,7 @@ namespace API.Data;
 // Adding Seed Data to populate the database with dummy data
 public class DbInitializer
 {
-    public static void InitDb(WebApplication app)
+    public static async Task InitDb(WebApplication app)
     {
         // Creates a service scope with automatic resource cleanup.
         /// The 'using' statement ensures that services (like DbContext) 
@@ -15,20 +15,47 @@ public class DbInitializer
         /// for garbage collection. This prevents memory leaks and ensures 
         /// database connections are closed promptly.
         using var scope = app.Services.CreateScope();
-        // Gets the StoreContext (database context) from the dependency 
+        // Get the StoreContext (database context) from the dependency 
         // injection container & ensuring we have a valid database connection 
         // to work with.
         var context = scope.ServiceProvider.GetRequiredService<StoreContext>()
-        ?? throw new InvalidOperationException("Failed to retrieve store context");
+            ?? throw new InvalidOperationException("Failed to retrieve store context");
+        // Get the UserManager from the DI container
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
+            ?? throw new InvalidOperationException("Failed to retrieve user manager");
 
-        SeedData(context);
+        await SeedData(context, userManager);
     }
 
     // Seeds the database with initial data if it's empty.
-    private static void SeedData(StoreContext context)
+    private static async Task SeedData(StoreContext context, UserManager<User> userManager)
     {
         // Apply pending database migrations
         context.Database.Migrate();
+
+        // Check if we have user in the db after db migrated
+        if (!userManager.Users.Any())
+        {
+            // Create New Member User if Does Not Exist in the DB 
+            var user = new User
+            {
+                UserName = "bob@test.com",
+                Email = "bob@test.com"
+            };
+            await userManager.CreateAsync(user, "Pa$$w0rd");
+            // Assign Authorization role to the user
+            await userManager.AddToRoleAsync(user, "Member");
+
+            // Create New Member User if Does Not Exist in the DB 
+            var admin = new User
+            {
+                UserName = "admin@test.com",
+                Email = "admin@test.com"
+            };
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            // Assign Authorization roles to the user
+            await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);
+        }
 
         // Exit if products already exist (avoid duplicates)
         if (context.Products.Any()) return;

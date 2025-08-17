@@ -1,5 +1,7 @@
 using API.Data;
 using API.Middleware;
+using API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -38,6 +40,28 @@ builder.Services.AddCors(options =>
 // middleware is created for each HTTP request for purely stateless operations.
 builder.Services.AddTransient<ExceptionMiddleware>();
 
+// Sets up Identity with built-in API endpoints for user registration, 
+// login, logout, and account management
+builder.Services.AddIdentityApiEndpoints<User>(opt =>
+{
+    // The application requires each user to have their own, unique
+    opt.User.RequireUniqueEmail = true;
+})
+// This enables features like assigning users to roles (Admin, User, etc.)
+.AddRoles<IdentityRole>()
+// StoreContext is the DbContext that will handle user, role, and 
+// related data persistence
+.AddEntityFrameworkStores<StoreContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Strict; // CSRF protection
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.SlidingExpiration = true;
+});
+
 var app = builder.Build();
 
 // Middleware: Configure the HTTP request pipeline.
@@ -61,9 +85,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(MyAllowSpecificOrigins);
 
+// The App knows who the user is by validing their identity
+app.UseAuthentication();
+// The app to define what that person (Admin, user) is allow to do
+app.UseAuthorization();
+
 app.MapControllers();
 
+// For Identity API Endpoints (give us the endpoints) e.g. //api/login
+app.MapGroup("api").MapIdentityApi<User>();
+
 // Seeding Data to the Database
-DbInitializer.InitDb(app);
+await DbInitializer.InitDb(app);
 
 app.Run();
