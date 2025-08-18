@@ -58,8 +58,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.SameSite = SameSiteMode.Strict; // CSRF protection
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    options.SlidingExpiration = true;
+    // options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    // options.SlidingExpiration = true;
 });
 
 var app = builder.Build();

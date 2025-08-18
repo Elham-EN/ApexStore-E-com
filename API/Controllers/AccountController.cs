@@ -10,7 +10,7 @@ namespace API.Controllers
         private readonly SignInManager<User> _signInManager;
         public AccountController(SignInManager<User> signInManager)
         {
-           this._signInManager = signInManager;
+            this._signInManager = signInManager;
         }
         // Send HTTP Response without response data
         [HttpPost("register")]
@@ -28,7 +28,7 @@ namespace API.Controllers
                 .CreateAsync(user, registerDto.Password);
             // Identity validation failed (e.g., weak password, duplicate email)
             if (!result.Succeeded)
-            {   
+            {
                 // Loop through Identity errors and add each to ModelState
                 foreach (var error in result.Errors)
                 {
@@ -47,6 +47,33 @@ namespace API.Controllers
             // Add the specified user to the named role.
             await this._signInManager.UserManager.AddToRoleAsync(user, "Member");
             return Ok();
+        }
+
+        [HttpGet("user-info")]
+        public async Task<ActionResult> GetUserInfo()
+        {
+            if (User.Identity?.IsAuthenticated == false) return NoContent();
+
+            var user = await this._signInManager.UserManager.GetUserAsync(User);
+
+            if (user == null) return Unauthorized();
+            // Gets a list of role names the specified user belongs to.
+            var roles = await this._signInManager.UserManager.GetRolesAsync(user);
+
+            return Ok(new
+            {
+                user.Email,
+                user.UserName,
+                Roles = roles
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Logout()
+        {
+            // Server-side remove the cookies from user's browser
+            await this._signInManager.SignOutAsync();
+            return NoContent();
         }
     }
 }
