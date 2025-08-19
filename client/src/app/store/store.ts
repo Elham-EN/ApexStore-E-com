@@ -4,12 +4,14 @@ import { uiSlice } from "../layout/uiSlice";
 import { errorApiSlice } from "../api/errorApi";
 import { basketApiSlice } from "@/features/basket/basketApiSlice";
 import { catalogSlice } from "@/features/catalog/catalogSlice";
+import { accountApiSlice } from "@/features/account/accountApiSlice";
 
 export const store = configureStore({
   reducer: {
     [catalogApiSlice.reducerPath]: catalogApiSlice.reducer,
     [errorApiSlice.reducerPath]: errorApiSlice.reducer,
     [basketApiSlice.reducerPath]: basketApiSlice.reducer,
+    [accountApiSlice.reducerPath]: accountApiSlice.reducer,
     ui: uiSlice.reducer,
     catalog: catalogSlice.reducer,
   },
@@ -17,7 +19,8 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       catalogApiSlice.middleware,
       errorApiSlice.middleware,
-      basketApiSlice.middleware
+      basketApiSlice.middleware,
+      accountApiSlice.middleware
     ),
 });
 

@@ -70,7 +70,7 @@ namespace API.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("logout")]
         public async Task<ActionResult> Logout()
         {
             // Server-side remove the cookies from user's browser
