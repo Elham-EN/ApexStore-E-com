@@ -1,7 +1,9 @@
 using API.DTOs;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -74,6 +76,44 @@ namespace API.Controllers
             // Server-side remove the cookies from user's browser
             await this._signInManager.SignOutAsync();
             return NoContent();
+        }
+
+        [Authorize] // only authenticated users can access this endpoint.
+        [HttpPost("address")]
+        public async Task<ActionResult<Address>> CreateOrUpdateAddress(Address address)
+        {
+            // Query the database for the currently authenticated user:
+            var user = await this._signInManager.UserManager.Users
+                // user's Address navigation property is loaded
+                .Include(x => x.Address)
+                // User.Identity!.Name gets the username of the logged-in user 
+                // from cookies
+                .FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
+
+            if (user == null) return Unauthorized();
+
+            // If no address exists, assign the new one
+            user.Address = address;
+
+            var result = await this._signInManager.UserManager.UpdateAsync(user);
+
+            if (!result.Succeeded) return BadRequest("Problem with system");
+
+            return Ok(user.Address);
+        }
+
+        [Authorize]
+        [HttpGet("address")]
+        public async Task<ActionResult<Address>> GetSavedAddress()
+        {
+            var address = await this._signInManager.UserManager.Users
+                .Where(x => x.UserName == User.Identity!.Name)
+                .Select(x => x.Address)
+                .FirstOrDefaultAsync();
+
+            if (address == null) return NoContent();
+
+            return address;
         }
     }
 }
