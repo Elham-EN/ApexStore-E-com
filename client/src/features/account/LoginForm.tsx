@@ -11,17 +11,24 @@ import React from "react";
 import PasswordInput from "./components/PasswordInput";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
-import type { LoginSchema } from "@/lib/schemas/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginSchema } from "@/lib/schemas/loginSchema";
+import { useLoginMutation } from "./accountApiSlice";
 
 export default function LoginForm(): React.ReactElement {
+  const [login, { isLoading }] = useLoginMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchema>();
+  } = useForm<LoginSchema>({
+    mode: "onTouched",
+    resolver: zodResolver(loginSchema),
+  });
 
-  const onSubmit = (data: LoginSchema) => {
-    console.log(data);
+  const onSubmit = async (data: LoginSchema) => {
+    await login(data);
   };
 
   return (
@@ -42,7 +49,7 @@ export default function LoginForm(): React.ReactElement {
             fullWidth
             label="Email"
             autoFocus
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
             error={Boolean(errors.email)}
             helperText={errors.email?.message}
           />
@@ -55,6 +62,7 @@ export default function LoginForm(): React.ReactElement {
             sx={{ ":hover": { color: "#ffffff" } }}
             variant="contained"
             type="submit"
+            disabled={isLoading}
           >
             Sign in
           </Button>

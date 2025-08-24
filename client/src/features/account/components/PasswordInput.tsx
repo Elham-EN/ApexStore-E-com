@@ -24,13 +24,7 @@ export default function PasswordInput({
       fullWidth
       label="Password"
       type={showPassword ? "text" : "password"}
-      {...register("password", {
-        required: "Password is required",
-        minLength: {
-          value: 6,
-          message: "Password must be at least 6 characters",
-        },
-      })}
+      {...register("password")}
       error={error}
       helperText={helperText}
       slotProps={{
