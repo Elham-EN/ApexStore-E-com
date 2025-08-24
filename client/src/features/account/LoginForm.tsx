@@ -10,8 +10,20 @@ import {
 import React from "react";
 import PasswordInput from "./components/PasswordInput";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import type { LoginSchema } from "@/lib/schemas/loginSchema";
 
 export default function LoginForm(): React.ReactElement {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchema>();
+
+  const onSubmit = (data: LoginSchema) => {
+    console.log(data);
+  };
+
   return (
     <Container component={Paper} maxWidth="sm" sx={{ borderRadius: 3, py: 3 }}>
       <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
@@ -19,15 +31,31 @@ export default function LoginForm(): React.ReactElement {
         <Typography variant="h5">Sign in</Typography>
         <Box
           component={"form"}
+          onSubmit={handleSubmit(onSubmit)}
           width={"100%"}
           display={"flex"}
           flexDirection={"column"}
           gap={3}
           marginY={3}
         >
-          <TextField fullWidth label="Email" autoFocus />
-          <PasswordInput />
-          <Button sx={{ ":hover": { color: "#ffffff" } }} variant="contained">
+          <TextField
+            fullWidth
+            label="Email"
+            autoFocus
+            {...register("email", { required: "Email is required" })}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
+          <PasswordInput
+            register={register}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+          />
+          <Button
+            sx={{ ":hover": { color: "#ffffff" } }}
+            variant="contained"
+            type="submit"
+          >
             Sign in
           </Button>
           <Typography sx={{ textAlign: "center" }}>
