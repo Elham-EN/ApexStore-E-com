@@ -18,12 +18,21 @@ import { LockOutlined } from "@mui/icons-material";
 import PasswordInput from "./components/PasswordInput";
 import { Link } from "react-router";
 
+interface ApiValidationError {
+  data: {
+    isValidationError: boolean;
+    validationErrors: string[];
+  };
+  status: number;
+}
+
 export default function RegisterForm(): React.ReactElement {
   const [registerUser] = useRegisterMutation();
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isValid, isLoading },
   } = useForm<RegisterSchema>({
     mode: "onTouched",
@@ -31,7 +40,17 @@ export default function RegisterForm(): React.ReactElement {
   });
 
   const onSubmit = async (data: RegisterSchema) => {
-    await registerUser(data);
+    try {
+      await registerUser(data).unwrap();
+    } catch (error) {
+      const apiError = error as ApiValidationError;
+      if (apiError?.data?.validationErrors?.length > 0) {
+        const emailErrorMsg = apiError.data.validationErrors[0];
+        setError("email", { message: emailErrorMsg });
+      } else {
+        console.error("Unknown error structure:", error);
+      }
+    }
   };
 
   return (

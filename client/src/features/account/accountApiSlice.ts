@@ -47,6 +47,7 @@ export const accountApiSlice = createApi({
           console.log("====================================");
           console.log(error);
           console.log("====================================");
+          throw error;
         }
       },
     }),
