@@ -9,15 +9,16 @@ import {
 } from "@mui/material";
 import React from "react";
 import PasswordInput from "./components/PasswordInput";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginSchema } from "@/lib/schemas/loginSchema";
-import { useLoginMutation } from "./accountApiSlice";
+import { useLazyUserInfoQuery, useLoginMutation } from "./accountApiSlice";
 
 export default function LoginForm(): React.ReactElement {
   const [login, { isLoading }] = useLoginMutation();
 
+  const [fetchUserInfo] = useLazyUserInfoQuery();
   const {
     register,
     handleSubmit,
@@ -29,9 +30,13 @@ export default function LoginForm(): React.ReactElement {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const onSubmit = async (data: LoginSchema) => {
     await login(data);
-    navigate("/catalog");
+    await fetchUserInfo();
+
+    navigate(location.state.from.pathname || "/catalog");
   };
 
   return (

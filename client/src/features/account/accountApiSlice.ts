@@ -74,4 +74,5 @@ export const {
   useRegisterMutation,
   useLogoutMutation,
   useUserInfoQuery,
+  useLazyUserInfoQuery,
 } = accountApiSlice;
