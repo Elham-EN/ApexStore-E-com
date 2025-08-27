@@ -21,11 +21,12 @@ import { ShoppingCart, Menu } from "@mui/icons-material";
 import { useAppSelector } from "../hooks";
 import { useFetchBasketQuery } from "@/features/basket/basketApiSlice";
 import UserMenu from "./UserMenu";
+import { useUserInfoQuery } from "@/features/account/accountApiSlice";
 
 const drawerWidth = 240;
 
 export default function Navbar(): React.ReactElement {
-  const user = { email: "test@test.com", roles: ["user"] };
+  const { currentData: user } = useUserInfoQuery();
   const { isLoading } = useAppSelector((state) => state.ui);
   const { mode, setMode } = useColorScheme();
   const { data: basket } = useFetchBasketQuery();

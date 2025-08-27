@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import PasswordInput from "./components/PasswordInput";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginSchema } from "@/lib/schemas/loginSchema";
@@ -27,8 +27,11 @@ export default function LoginForm(): React.ReactElement {
     resolver: zodResolver(loginSchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: LoginSchema) => {
     await login(data);
+    navigate("/catalog");
   };
 
   return (
