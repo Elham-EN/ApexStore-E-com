@@ -20,10 +20,12 @@ import { Link, NavLink } from "react-router";
 import { ShoppingCart, Menu } from "@mui/icons-material";
 import { useAppSelector } from "../hooks";
 import { useFetchBasketQuery } from "@/features/basket/basketApiSlice";
+import UserMenu from "./UserMenu";
 
 const drawerWidth = 240;
 
 export default function Navbar(): React.ReactElement {
+  const user = { email: "test@test.com", roles: ["user"] };
   const { isLoading } = useAppSelector((state) => state.ui);
   const { mode, setMode } = useColorScheme();
   const { data: basket } = useFetchBasketQuery();
@@ -164,21 +166,27 @@ export default function Navbar(): React.ReactElement {
               </Badge>
             </IconButton>
 
-            {/* Desktop auth links - hide on medium screens and below */}
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <List sx={{ display: "flex" }}>
-                {rightLinks.map(({ title, path }) => (
-                  <ListItem
-                    component={NavLink}
-                    to={path}
-                    key={path}
-                    sx={navLinkStyles}
-                  >
-                    {title.toUpperCase()}
-                  </ListItem>
-                ))}
-              </List>
-            </Box>
+            {user ? (
+              <UserMenu user={user} />
+            ) : (
+              <>
+                {/* Desktop auth links - hide on medium screens and below */}
+                <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                  <List sx={{ display: "flex" }}>
+                    {rightLinks.map(({ title, path }) => (
+                      <ListItem
+                        component={NavLink}
+                        to={path}
+                        key={path}
+                        sx={navLinkStyles}
+                      >
+                        {title.toUpperCase()}
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              </>
+            )}
           </Box>
         </Toolbar>
 
