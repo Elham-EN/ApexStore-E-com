@@ -3,6 +3,7 @@ using API.Middleware;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using API.Services;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -39,6 +40,11 @@ builder.Services.AddCors(options =>
 // dependencies. The transient lifetime ensures that a fresh instance of the
 // middleware is created for each HTTP request for purely stateless operations.
 builder.Services.AddTransient<ExceptionMiddleware>();
+
+// Scoped to HTTP request: When HTTP request received & it's going to the 
+// payment controller class & injected into it. When payment controller is
+// created, then it also create new instance of payment service as well
+builder.Services.AddScoped<PaymentsService>();
 
 // Sets up Identity with built-in API endpoints for user registration, 
 // login, logout, and account management

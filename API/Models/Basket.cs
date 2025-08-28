@@ -11,6 +11,17 @@ namespace API.Models
         public required string BasketId { get; set; }
         // One-to-many: One `Basket` can have many `BasketItem`
         public List<BasketItem> Items { get; set; } = [];
+
+        // Store inside basket: Client use this to communicate directly with 
+        // Stripe without our API involvement. We get client secret when we
+        // create the payment intent.
+        public string? ClientSecret { get; set; }
+
+        // Store inside basket: when user's update their basket & come back to
+        // checkout page, then we need to update the payment intent to let Stripe
+        // know the new amount based on the changes they made in their basket
+        public string? PaymentIntentId { get; set; }
+
         // Add Product Item to the Basket
         public void AddItem(Product product, int quantity)
         {

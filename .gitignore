@@ -12,6 +12,7 @@ API/[Bb]in/
 API/[Oo]bj/
 API/[Ll]og/
 API/[Ll]ogs/
+API/appsettings.Development.json
 
 # client build results (for future frontend)
 client/node_modules/
@@ -391,4 +392,4 @@ client/.nuxt/
 client/.vuepress/dist
 client/.serverless/
 client/.docusaurus/
-client/.cache/
+
