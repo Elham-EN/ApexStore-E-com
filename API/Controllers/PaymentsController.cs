@@ -38,9 +38,12 @@ public class PaymentsController : BaseApiController
         basket.PaymentIntentId ??= intent.Id;
         basket.ClientSecret ??= intent.ClientSecret;
 
-        var result = await this._storeContext.SaveChangesAsync() > 0;
+        if (this._storeContext.ChangeTracker.HasChanges())
+        {
+             var result = await this._storeContext.SaveChangesAsync() > 0;
 
-        if (!result) return BadRequest("Failed to update basket with intent");
+             if (!result) return BadRequest("Failed to update basket with intent");
+        }
 
         return basket.ToBasketDto();
     }

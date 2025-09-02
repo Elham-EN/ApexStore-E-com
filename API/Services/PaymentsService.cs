@@ -28,7 +28,7 @@ public class PaymentsService
         var subtotal = basket.Items.Sum(x => x.Quantity * x.Product.Price);
         // Calculate delivery fee based on the subtotal: if user's order is over
         // $100, then delivry is free if below $100, charge user fee of $5
-        var deliverFee = subtotal > 10000 ? 0 : 500;
+        var deliverFee = subtotal > 10000 ? 0 : 1000;
         // IF it's empty, then it's a new payment intent first time
         if (string.IsNullOrEmpty(basket.PaymentIntentId))
         {
