@@ -3,6 +3,8 @@ import type { Product } from "./Product";
 export interface Basket {
   basketId: string;
   items: BasketItem[];
+  clientSecret?: string;
+  paymentIntentId?: string;
 }
 
 export interface BasketItem {

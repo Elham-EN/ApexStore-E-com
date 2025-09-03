@@ -27,7 +27,7 @@ type ValidationError = {
 };
 
 const customBaseQuery = fetchBaseQuery({
-  baseUrl: "https://localhost:7214/api",
+  baseUrl: import.meta.env.VITE_API_URL as string,
   credentials: "include",
 });
 
