@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, useColorScheme } from "@mui/material";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import React, { useMemo, useRef } from "react";
@@ -17,6 +17,7 @@ export default function CheckoutPage(): React.ReactElement {
   // useRef value is unaffected by checkout component re-rendering, the value
   // persist
   const created = useRef(false);
+  const { mode } = useColorScheme();
 
   // So next time when effect is called, created will be set to true, means
   // createPaymentIntent will not be called to avoid creating additional
@@ -31,8 +32,12 @@ export default function CheckoutPage(): React.ReactElement {
     if (!basket?.clientSecret) return undefined;
     return {
       clientSecret: basket.clientSecret,
-    };
-  }, [basket?.clientSecret]);
+      appearance: {
+        labels: "floating",
+        theme: mode === "dark" ? "night" : "stripe",
+      },
+    } as StripeElementsOptions;
+  }, [basket?.clientSecret, mode]);
 
   if (!basket?.items)
     return (

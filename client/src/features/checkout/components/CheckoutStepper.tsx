@@ -1,4 +1,14 @@
-import { Box, Button, Paper, Step, StepLabel, Stepper } from "@mui/material";
+import { CheckBox } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  Paper,
+  Step,
+  StepLabel,
+  Stepper,
+} from "@mui/material";
+import { AddressElement } from "@stripe/react-stripe-js";
 import React from "react";
 
 export default function CheckoutStepper(): React.ReactElement {
@@ -28,7 +38,20 @@ export default function CheckoutStepper(): React.ReactElement {
       </Stepper>
       <Box sx={{ mt: 4 }}>
         <Box sx={{ display: activeStep === 0 ? "block" : "none" }}>
-          Address Step
+          <AddressElement
+            options={{
+              mode: "shipping",
+            }}
+          />
+          <FormControlLabel
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              mt: 4,
+            }}
+            control={<CheckBox />}
+            label={"Save as default address"}
+          />
         </Box>
         <Box sx={{ display: activeStep === 1 ? "block" : "none" }}>
           Payment Step
