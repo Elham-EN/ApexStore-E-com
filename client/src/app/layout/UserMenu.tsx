@@ -25,7 +25,9 @@ export default function UserMenu({ user }: FadeMenuProps) {
 
   return (
     <div>
-      <Button onClick={handleClick}>{user.email}</Button>
+      <Button sx={{ color: "#ffffff" }} onClick={handleClick}>
+        {user.email}
+      </Button>
       <Menu
         id="fade-menu"
         slotProps={{
