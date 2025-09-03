@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { AddressElement, PaymentElement } from "@stripe/react-stripe-js";
 import React from "react";
+import Review from "./Review";
 
 export default function CheckoutStepper(): React.ReactElement {
   // Keep track of which step we're currently on
@@ -57,7 +58,7 @@ export default function CheckoutStepper(): React.ReactElement {
           <PaymentElement />
         </Box>
         <Box sx={{ display: activeStep === 2 ? "block" : "none" }}>
-          Review Step
+          <Review />
         </Box>
       </Box>
       <Box display={"flex"} paddingTop={4} justifyContent={"space-between"}>
