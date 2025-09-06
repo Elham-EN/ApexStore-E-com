@@ -6,7 +6,7 @@ export interface User {
 export interface Address {
   name: string;
   line1: string;
-  line2: string;
+  line2: string | null;
   city: string;
   state: string;
   postal_code: string;

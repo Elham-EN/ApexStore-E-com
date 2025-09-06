@@ -1,4 +1,3 @@
-import { CheckBox } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -9,11 +8,19 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  Checkbox,
 } from "@mui/material";
-import { AddressElement, PaymentElement } from "@stripe/react-stripe-js";
+import {
+  AddressElement,
+  PaymentElement,
+  useElements,
+} from "@stripe/react-stripe-js";
 import React from "react";
 import Review from "./Review";
-import { useFetchAddressQuery } from "@/features/account/accountApiSlice";
+import {
+  useFetchAddressQuery,
+  useUpdateUserAddressMutation,
+} from "@/features/account/accountApiSlice";
 import type { Address } from "@/app/models/User";
 
 export default function CheckoutStepper(): React.ReactElement {
@@ -21,35 +28,45 @@ export default function CheckoutStepper(): React.ReactElement {
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [address, setAddress] = React.useState<Partial<Address>>();
   const [fullname, setFullName] = React.useState<string>("");
+  const [savedAddressChecked, setSaveAddressChecked] =
+    React.useState<boolean>(false);
   const { data } = useFetchAddressQuery();
+  const [updateAddress] = useUpdateUserAddressMutation();
+  const elements = useElements();
 
   React.useEffect(() => {
     if (data) {
       const { name, ...restAddress } = data;
-      // Stripe expects country codes like "AU" but API returns "Australia"
-      const countryCode =
-        restAddress.country === "Australia" ? "AU" : restAddress.country;
-      // Stripe expects state codes like "VIC" but API returns "Victoria"
-      const stateCode =
-        restAddress.state === "Victoria" ? "VIC" : restAddress.state;
-
       setFullName(name || "");
-
       setAddress({
         line1: restAddress.line1 || "",
         line2: restAddress.line2 || "",
         city: restAddress.city || "",
-        state: stateCode || "",
+        state: restAddress.state || "",
         postal_code: restAddress.postal_code || "",
-        country: countryCode || "",
+        country: restAddress.country || "",
       });
     }
   }, [data]);
 
   const steps: string[] = ["Address", "Payment", "Review"];
 
-  const handleNext = (): void => {
+  const handleNext = async (): Promise<void> => {
+    if (activeStep === 0 && savedAddressChecked && elements) {
+      const address = await getStripeAddress();
+      if (address) await updateAddress(address);
+    }
     setActiveStep((step) => step + 1);
+  };
+
+  const getStripeAddress = async (): Promise<Address | null> => {
+    const addressElement = elements?.getElement("address");
+    if (!addressElement) return null;
+    const {
+      value: { name, address },
+    } = await addressElement.getValue();
+    if (name && address) return { ...address, name };
+    return null;
   };
 
   const handleBack = (): void => {
@@ -92,7 +109,14 @@ export default function CheckoutStepper(): React.ReactElement {
               justifyContent: "end",
               mt: 4,
             }}
-            control={<CheckBox />}
+            control={
+              <Checkbox
+                checked={savedAddressChecked}
+                onChange={(event) =>
+                  setSaveAddressChecked(event.target.checked)
+                }
+              />
+            }
             label={"Save as default address"}
           />
         </Box>
