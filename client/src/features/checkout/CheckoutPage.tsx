@@ -64,7 +64,7 @@ export default function CheckoutPage(): React.ReactElement {
         )}
       </Grid>
       <Grid size={4}>
-        <CheckoutOrderSummary items={basket.items} />
+        <CheckoutOrderSummary />
       </Grid>
     </Grid>
   );

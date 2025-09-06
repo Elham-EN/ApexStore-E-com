@@ -2,24 +2,11 @@ import { currencyFormat } from "@/lib/util";
 import { Box, Button, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 import OrderSummaryRow from "./OrderSummaryRow";
-import type { BasketItem } from "../models/Basket";
 import { Link } from "react-router";
+import { useBasket } from "@/lib/hooks/useBasket";
 
-interface OrderSummaryProps {
-  items: BasketItem[];
-}
-
-function OrderSummary({ items }: OrderSummaryProps): React.ReactElement {
-  const subtotal = items.reduce(
-    (accItem, currItem) => accItem + currItem.price * currItem.quantity,
-    0
-  );
-  // Delivery fee in cents ($10.00 = 1000 cents)
-  const deliveryFee: number = 1000;
-  // Discount as percentage (10% = 0.10)
-  const discountPercentage: number = 0.1;
-  const discountAmount = Math.round(subtotal * discountPercentage);
-  const total = subtotal + deliveryFee - discountAmount;
+function OrderSummary(): React.ReactElement {
+  const { deliveryFee, subtotal, total, discountAmount } = useBasket();
   return (
     <Paper
       sx={{

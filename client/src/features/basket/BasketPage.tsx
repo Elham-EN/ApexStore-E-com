@@ -59,7 +59,7 @@ export default function BasketPage(): React.ReactElement {
             }}
           >
             {/* Order Summary */}
-            <OrderSummary items={data.items} />
+            <OrderSummary />
 
             {/* Coupon Code - positioned below OrderSummary */}
             <Box sx={{ mt: 2 }}>
