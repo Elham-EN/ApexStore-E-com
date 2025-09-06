@@ -1,5 +1,5 @@
 import { baseQueryWithErrorHandling } from "@/app/api/baseApi";
-import type { User } from "@/app/models/User";
+import type { Address, User } from "@/app/models/User";
 import { router } from "@/app/routes/Routes";
 import type { LoginSchema } from "@/lib/schemas/loginSchema";
 import type { RegisterSchema } from "@/lib/schemas/registerSchema";
@@ -66,6 +66,36 @@ export const accountApiSlice = createApi({
         router.navigate("/");
       },
     }),
+    fetchAddress: builder.query<Address, void>({
+      query: () => ({
+        url: "Account/address",
+      }),
+    }),
+    updateUserAddress: builder.mutation<Address, Address>({
+      query: (address) => ({
+        url: "Account/address",
+        method: "POST",
+        body: address,
+      }),
+      onQueryStarted: async (address, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          accountApiSlice.util.updateQueryData(
+            "fetchAddress",
+            undefined,
+            // draft of the current state
+            (draft) => {
+              Object.assign(draft, { ...address });
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+          console.error(error);
+        }
+      },
+    }),
   }),
 });
 
@@ -75,4 +105,6 @@ export const {
   useLogoutMutation,
   useUserInfoQuery,
   useLazyUserInfoQuery,
+  useFetchAddressQuery,
+  useUpdateUserAddressMutation,
 } = accountApiSlice;

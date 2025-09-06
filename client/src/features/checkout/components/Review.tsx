@@ -40,6 +40,7 @@ export default function Review(): React.ReactElement {
             <TableBody>
               {basket?.items.map((item) => (
                 <TableRow
+                  key={item.productId}
                   sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
                 >
                   <TableCell sx={{ py: 2 }}>
