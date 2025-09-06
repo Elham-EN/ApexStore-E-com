@@ -22,6 +22,10 @@ import {
   useUpdateUserAddressMutation,
 } from "@/features/account/accountApiSlice";
 import type { Address } from "@/app/models/User";
+import type {
+  StripeAddressElementChangeEvent,
+  StripePaymentElementChangeEvent,
+} from "@stripe/stripe-js";
 
 export default function CheckoutStepper(): React.ReactElement {
   // Keep track of which step we're currently on
@@ -30,6 +34,8 @@ export default function CheckoutStepper(): React.ReactElement {
   const [fullname, setFullName] = React.useState<string>("");
   const [savedAddressChecked, setSaveAddressChecked] =
     React.useState<boolean>(false);
+  const [addressComplete, setAddressComplete] = React.useState<boolean>(false);
+  const [paymentComplete, setPaymentComplete] = React.useState<boolean>(false);
   const { data } = useFetchAddressQuery();
   const [updateAddress] = useUpdateUserAddressMutation();
   const elements = useElements();
@@ -73,6 +79,14 @@ export default function CheckoutStepper(): React.ReactElement {
     setActiveStep((step) => step - 1);
   };
 
+  const handleAddressChange = (event: StripeAddressElementChangeEvent) => {
+    setAddressComplete(event.complete);
+  };
+
+  const handlePaymentChange = (event: StripePaymentElementChangeEvent) => {
+    setPaymentComplete(event.complete);
+  };
+
   return (
     <Paper sx={{ p: 3, borderRadius: 3 }}>
       <Stepper activeStep={activeStep}>
@@ -95,6 +109,7 @@ export default function CheckoutStepper(): React.ReactElement {
                   address: address as Address,
                 },
               }}
+              onChange={handleAddressChange}
             />
           ) : (
             <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -121,7 +136,7 @@ export default function CheckoutStepper(): React.ReactElement {
           />
         </Box>
         <Box sx={{ display: activeStep === 1 ? "block" : "none" }}>
-          <PaymentElement />
+          <PaymentElement onChange={handlePaymentChange} />
         </Box>
         <Box sx={{ display: activeStep === 2 ? "block" : "none" }}>
           <Review />
@@ -129,7 +144,15 @@ export default function CheckoutStepper(): React.ReactElement {
       </Box>
       <Box display={"flex"} paddingTop={4} justifyContent={"space-between"}>
         <Button onClick={handleBack}>Back</Button>
-        <Button onClick={handleNext}>Next</Button>
+        <Button
+          onClick={handleNext}
+          disabled={
+            (activeStep === 0 && !addressComplete) ||
+            (activeStep === 1 && !paymentComplete)
+          }
+        >
+          Next
+        </Button>
       </Box>
     </Paper>
   );
