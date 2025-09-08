@@ -36,7 +36,7 @@ export default function LoginForm(): React.ReactElement {
     await login(data);
     await fetchUserInfo();
 
-    navigate(location.state.from.pathname || "/catalog");
+    navigate(location.state?.from?.pathname || "/catalog");
   };
 
   return (

@@ -12,15 +12,25 @@ import CheckoutPage from "@/features/checkout/CheckoutPage";
 import LoginForm from "@/features/account/LoginForm";
 import RegisterForm from "@/features/account/RegisterForm";
 import RequireAuth from "./RequireAuth";
+import RequireGuest from "./RequireGuest";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      // Protected routes (require authentication)
       {
         element: <RequireAuth />,
         children: [{ path: "/checkout", element: <CheckoutPage /> }],
+      },
+      // Guest-only routes (redirect if authenticated)
+      {
+        element: <RequireGuest />,
+        children: [
+          { path: "/login", element: <LoginForm /> },
+          { path: "/register", element: <RegisterForm /> },
+        ],
       },
       {
         path: "",
@@ -46,14 +56,7 @@ export const router = createBrowserRouter([
         path: "/basket",
         element: <BasketPage />,
       },
-      {
-        path: "/login",
-        element: <LoginForm />,
-      },
-      {
-        path: "/register",
-        element: <RegisterForm />,
-      },
+
       {
         path: "/server-error",
         element: <ServerError />,

@@ -26,6 +26,8 @@ import type {
   StripeAddressElementChangeEvent,
   StripePaymentElementChangeEvent,
 } from "@stripe/stripe-js";
+import { useBasket } from "@/lib/hooks/useBasket";
+import { currencyFormat } from "@/lib/util";
 
 export default function CheckoutStepper(): React.ReactElement {
   // Keep track of which step we're currently on
@@ -39,6 +41,7 @@ export default function CheckoutStepper(): React.ReactElement {
   const { data } = useFetchAddressQuery();
   const [updateAddress] = useUpdateUserAddressMutation();
   const elements = useElements();
+  const { total } = useBasket();
 
   React.useEffect(() => {
     if (data) {
@@ -151,7 +154,9 @@ export default function CheckoutStepper(): React.ReactElement {
             (activeStep === 1 && !paymentComplete)
           }
         >
-          Next
+          {activeStep === steps.length - 1
+            ? `Pay ${currencyFormat(total)}`
+            : "Next"}
         </Button>
       </Box>
     </Paper>
