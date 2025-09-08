@@ -14,6 +14,7 @@ import {
   AddressElement,
   PaymentElement,
   useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
 import React from "react";
 import Review from "./Review";
@@ -22,12 +23,14 @@ import {
   useUpdateUserAddressMutation,
 } from "@/features/account/accountApiSlice";
 import type { Address } from "@/app/models/User";
-import type {
-  StripeAddressElementChangeEvent,
-  StripePaymentElementChangeEvent,
+import {
+  type ConfirmationToken,
+  type StripeAddressElementChangeEvent,
+  type StripePaymentElementChangeEvent,
 } from "@stripe/stripe-js";
 import { useBasket } from "@/lib/hooks/useBasket";
 import { currencyFormat } from "@/lib/util";
+import { toast, type Id } from "react-toastify";
 
 export default function CheckoutStepper(): React.ReactElement {
   // Keep track of which step we're currently on
@@ -38,10 +41,14 @@ export default function CheckoutStepper(): React.ReactElement {
     React.useState<boolean>(false);
   const [addressComplete, setAddressComplete] = React.useState<boolean>(false);
   const [paymentComplete, setPaymentComplete] = React.useState<boolean>(false);
+  const [confirmationToken, setConfirmationToken] =
+    React.useState<ConfirmationToken | null>(null);
   const { data } = useFetchAddressQuery();
   const [updateAddress] = useUpdateUserAddressMutation();
+  // Crucial for interacting with Stripe pre-built UI Elements,
   const elements = useElements();
   const { total } = useBasket();
+  const stripe = useStripe();
 
   React.useEffect(() => {
     if (data) {
@@ -60,10 +67,23 @@ export default function CheckoutStepper(): React.ReactElement {
 
   const steps: string[] = ["Address", "Payment", "Review"];
 
-  const handleNext = async (): Promise<void> => {
+  const handleNext = async (): Promise<Id | undefined> => {
     if (activeStep === 0 && savedAddressChecked && elements) {
       const address = await getStripeAddress();
       if (address) await updateAddress(address);
+    }
+    if (activeStep === 1) {
+      if (!elements || !stripe) return;
+      // Before confirming payment, validate the state of the Payment
+      // Element and collect any data required for wallets.
+      const result = await elements.submit();
+      if (result.error) return toast.error(result.error?.message);
+      // Convert payment information collected by elements into a ConfirmationToken
+      // object that you safely pass to your server to use in an API call
+      const stripeResult = await stripe.createConfirmationToken({ elements });
+      if (stripeResult.error) return toast.error(stripeResult.error.message);
+      // Once in Review componentm should have access to this token
+      setConfirmationToken(stripeResult.confirmationToken);
     }
     setActiveStep((step) => step + 1);
   };
@@ -142,7 +162,7 @@ export default function CheckoutStepper(): React.ReactElement {
           <PaymentElement onChange={handlePaymentChange} />
         </Box>
         <Box sx={{ display: activeStep === 2 ? "block" : "none" }}>
-          <Review />
+          <Review confirmationToken={confirmationToken} />
         </Box>
       </Box>
       <Box display={"flex"} paddingTop={4} justifyContent={"space-between"}>
