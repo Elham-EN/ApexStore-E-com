@@ -1,7 +1,11 @@
-import { useFetchBasketQuery } from "@/features/basket/basketApiSlice";
+import {
+  useClearBasketMutation,
+  useFetchBasketQuery,
+} from "@/features/basket/basketApiSlice";
 
 export function useBasket() {
   const { data: basket } = useFetchBasketQuery();
+  const [clearBasket] = useClearBasketMutation();
   const subtotal = basket?.items.reduce(
     (accItem, currItem) => accItem + currItem.price * currItem.quantity,
     0
@@ -13,5 +17,5 @@ export function useBasket() {
   const discountAmount = Math.round(subtotal * discountPercentage);
   const total = subtotal + deliveryFee - discountAmount;
 
-  return { deliveryFee, discountAmount, total, subtotal };
+  return { deliveryFee, discountAmount, total, subtotal, basket, clearBasket };
 }

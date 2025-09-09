@@ -2,6 +2,7 @@ import { baseQueryWithErrorHandling } from "@/app/api/baseApi";
 import type { Basket } from "@/app/models/Basket";
 import type { Product } from "@/app/models/Product"; // Import Product type
 import { createApi } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 
 type MutateBasketItem = {
   productId: number;
@@ -153,6 +154,21 @@ export const basketApiSlice = createApi({
         }
       },
     }),
+    clearBasket: builder.mutation<void, void>({
+      queryFn: () => ({ data: undefined }),
+      onQueryStarted: async (_, { dispatch }) => {
+        dispatch(
+          basketApiSlice.util.updateQueryData(
+            "fetchBasket",
+            undefined,
+            (draft) => {
+              draft.items = [];
+            }
+          )
+        );
+        Cookies.remove("basketId");
+      },
+    }),
   }),
 });
 
@@ -160,4 +176,5 @@ export const {
   useFetchBasketQuery,
   useAddBasketItemMutation,
   useRemoveBasketItemMutation,
+  useClearBasketMutation,
 } = basketApiSlice;

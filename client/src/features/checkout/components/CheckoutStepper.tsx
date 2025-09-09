@@ -31,6 +31,7 @@ import {
 import { useBasket } from "@/lib/hooks/useBasket";
 import { currencyFormat } from "@/lib/util";
 import { toast, type Id } from "react-toastify";
+import { useNavigate } from "react-router";
 
 export default function CheckoutStepper(): React.ReactElement {
   // Keep track of which step we're currently on
@@ -43,12 +44,14 @@ export default function CheckoutStepper(): React.ReactElement {
   const [paymentComplete, setPaymentComplete] = React.useState<boolean>(false);
   const [confirmationToken, setConfirmationToken] =
     React.useState<ConfirmationToken | null>(null);
+  const [submitting, setSubmitting] = React.useState<boolean>(false);
   const { data } = useFetchAddressQuery();
   const [updateAddress] = useUpdateUserAddressMutation();
   // Crucial for interacting with Stripe pre-built UI Elements,
   const elements = useElements();
-  const { total } = useBasket();
+  const { total, basket, clearBasket } = useBasket();
   const stripe = useStripe();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (data) {
@@ -85,7 +88,41 @@ export default function CheckoutStepper(): React.ReactElement {
       // Once in Review componentm should have access to this token
       setConfirmationToken(stripeResult.confirmationToken);
     }
-    setActiveStep((step) => step + 1);
+    if (activeStep === 2) {
+      await confirmPayment();
+    }
+    if (activeStep < 2) setActiveStep((step) => step + 1);
+  };
+
+  const confirmPayment = async () => {
+    setSubmitting(true);
+    try {
+      if (!confirmationToken || !basket?.clientSecret) {
+        throw new Error("Unable to process payment");
+      }
+      const paymentResult = await stripe?.confirmPayment({
+        clientSecret: basket.clientSecret,
+        redirect: "if_required",
+        confirmParams: {
+          confirmation_token: confirmationToken.id,
+        },
+      });
+      if (paymentResult?.paymentIntent?.status === "succeeded") {
+        navigate("/checkout/success");
+        clearBasket();
+      } else if (paymentResult?.error) {
+        throw new Error(paymentResult.error.message);
+      } else {
+        throw new Error("Something went wrong");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+      setActiveStep((step) => step - 1);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const getStripeAddress = async (): Promise<Address | null> => {
@@ -169,9 +206,11 @@ export default function CheckoutStepper(): React.ReactElement {
         <Button onClick={handleBack}>Back</Button>
         <Button
           onClick={handleNext}
+          loading={submitting}
           disabled={
             (activeStep === 0 && !addressComplete) ||
-            (activeStep === 1 && !paymentComplete)
+            (activeStep === 1 && !paymentComplete) ||
+            submitting
           }
         >
           {activeStep === steps.length - 1

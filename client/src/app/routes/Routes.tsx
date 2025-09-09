@@ -13,6 +13,7 @@ import LoginForm from "@/features/account/LoginForm";
 import RegisterForm from "@/features/account/RegisterForm";
 import RequireAuth from "./RequireAuth";
 import RequireGuest from "./RequireGuest";
+import CheckoutSuccess from "@/features/checkout/components/CheckoutSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,10 @@ export const router = createBrowserRouter([
       // Protected routes (require authentication)
       {
         element: <RequireAuth />,
-        children: [{ path: "/checkout", element: <CheckoutPage /> }],
+        children: [
+          { path: "/checkout", element: <CheckoutPage /> },
+          { path: "/checkout/success", element: <CheckoutSuccess /> },
+        ],
       },
       // Guest-only routes (redirect if authenticated)
       {
