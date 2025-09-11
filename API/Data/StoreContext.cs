@@ -1,5 +1,6 @@
 
 using API.Models;
+using API.Models.OrderAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace API.Data
         /// Example: _context.Products.ToListAsync() gets all products.
         public required DbSet<Product> Products { get; set; }
         public required DbSet<Basket> Baskets { get; set; }
+        public required DbSet<Order> Orders { get; set; }
         // Customize the model for identity
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,7 +35,7 @@ namespace API.Data
                     // Role name (shown to users)
                     Name = "Member",
                     // Uppercase version for consistent lookups
-                    NormalizedName = "MEMBER" 
+                    NormalizedName = "MEMBER"
                 },
                 // Creates an "Admin" role with a different ID 
                 new IdentityRole
