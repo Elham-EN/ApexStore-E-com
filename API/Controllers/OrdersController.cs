@@ -22,10 +22,10 @@ public class OrdersController : BaseApiController
 
     // Get List of Orders
     [HttpGet]
-    public async Task<ActionResult<List<Order>>> GetOrders()
+    public async Task<ActionResult<List<OrderDto>>> GetOrders()
     {
         var orders = await this._context.Orders
-            .Include(x => x.OrderItems)
+            .ProjectToDto()
             .Where(x => x.BuyerEmail == User.GetUserName())
             .ToListAsync();
 
@@ -34,9 +34,10 @@ public class OrdersController : BaseApiController
 
     // Get a specific order
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Order>> GetOrderDetails(int id)
+    public async Task<ActionResult<OrderDto>> GetOrderDetails(int id)
     {
         var order = await this._context.Orders
+            .ProjectToDto()
             .Where(x => x.BuyerEmail == User.GetUserName() && id == x.Id)
             .FirstOrDefaultAsync();
 
@@ -88,7 +89,8 @@ public class OrdersController : BaseApiController
 
         if (!result) return BadRequest("Problem creating order");
 
-        return CreatedAtAction(nameof(GetOrderDetails), new { id = order.Id }, order);
+        return CreatedAtAction(nameof(GetOrderDetails),
+            new { id = order.Id }, order.ToDto());
     }
 
     private static List<OrderItem>? CreateOrderItems(List<BasketItem> basketItems)
