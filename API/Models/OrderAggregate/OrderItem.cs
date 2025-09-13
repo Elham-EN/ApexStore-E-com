@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace API.Models.OrderAggregate
 {
     public class OrderItem

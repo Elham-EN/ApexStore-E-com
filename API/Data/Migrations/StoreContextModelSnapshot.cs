@@ -111,7 +111,7 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("Delivery")
+                    b.Property<long>("DeliveryFee")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("Discount")
@@ -514,7 +514,7 @@ namespace API.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.Property<string>("Picture")
+                            b1.Property<string>("PictureUrl")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 

@@ -9,7 +9,7 @@ namespace API.Models.OrderAggregate
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public List<OrderItem> OrderItems { get; set; } = [];
         public long Subtotal { get; set; }
-        public long Delivery { get; set; }
+        public long DeliveryFee { get; set; }
         public long Discount { get; set; }
         public string? PaymentIntentId { get; set; }
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;

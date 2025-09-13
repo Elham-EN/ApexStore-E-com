@@ -10,6 +10,6 @@ namespace API.Models.OrderAggregate
         // This guarantees that Name and Picture will always have a 
         // value when a ProductItemOrdered object is instantiated.
         public required string Name { get; set; }
-        public required string Picture { get; set; }
+        public required string PictureUrl { get; set; }
     }
 }
