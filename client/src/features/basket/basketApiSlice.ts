@@ -163,6 +163,7 @@ export const basketApiSlice = createApi({
             undefined,
             (draft) => {
               draft.items = [];
+              draft.basketId = "";
             }
           )
         );
