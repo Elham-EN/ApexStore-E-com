@@ -6,7 +6,7 @@ import React from "react";
 export default function NotFound(): React.ReactElement {
   const { state } = useLocation();
   return (
-    state.error && (
+    state?.error && (
       <Container
         component={Paper}
         sx={{

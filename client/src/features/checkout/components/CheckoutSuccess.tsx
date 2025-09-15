@@ -32,7 +32,7 @@ export default function CheckoutSuccess(): React.ReactElement {
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Typography variant="h5" align="center">
-          Loading products...
+          No order found
         </Typography>
       </Container>
     );
