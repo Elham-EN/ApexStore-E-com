@@ -66,24 +66,30 @@ public class OrdersController : BaseApiController
 
         var deliveryFee = CalculateDeliveryFee(subtotal);
 
-        // Create new Order object
-        var order = new Order
+        var order = await this._context.Orders
+             .Include(x => x.OrderItems)
+             .FirstOrDefaultAsync(x => x.PaymentIntentId == basket.PaymentIntentId);
+
+        if (order == null)
         {
-            OrderItems = items,
-            BuyerEmail = User.GetUserName(),
-            ShippingAddress = orderDto.ShippingAddress,
-            DeliveryFee = deliveryFee,
-            Subtotal = subtotal,
-            PaymentSummary = orderDto.PaymentSummary,
-            PaymentIntentId = basket.PaymentIntentId
-        };
-
-        this._context.Add(order);
-
-        // Remove basket from the backend
-        this._context.Baskets.Remove(basket);
-
-        Response.Cookies.Delete("basketId");
+            // Create new Order object
+            order = new Order
+            {
+                OrderItems = items,
+                BuyerEmail = User.GetUserName(),
+                ShippingAddress = orderDto.ShippingAddress,
+                DeliveryFee = deliveryFee,
+                Subtotal = subtotal,
+                PaymentSummary = orderDto.PaymentSummary,
+                PaymentIntentId = basket.PaymentIntentId
+            };
+            this._context.Add(order);
+        }
+        else
+        {
+            // Updating an existing order
+            order.OrderItems = items;
+        }
 
         var result = await this._context.SaveChangesAsync() > 0;
 

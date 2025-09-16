@@ -2,9 +2,11 @@
 using API.Data;
 using API.DTOs;
 using API.Extensions;
+using API.Models.OrderAggregate;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stripe; // Stripe payment processing library
 
 
@@ -97,17 +99,49 @@ public class PaymentsController : BaseApiController
     }
 
     // Handle what happens when a payment fails
-    // TODO: Implement logic to update order status, notify user, etc.
     private async Task HandlePaymentIntentFailed(PaymentIntent intent)
     {
-        throw new NotImplementedException();
+        var order = await this._storeContext.Orders
+             .Include(x => x.OrderItems)
+             .FirstOrDefaultAsync(x => x.PaymentIntentId == intent.Id)
+                 ?? throw new Exception("Order not found");
+
+        foreach (var item in order.OrderItems)
+        {
+            var productItem = await this._storeContext.Products
+                .FindAsync(item.ItemOrdered.ProductId)
+                    ?? throw new Exception("Problem updating order stock");
+            // Put the product back in stock since payment failed
+            productItem.QuantityInStock += item.Quantity;
+        }
+
+        order.OrderStatus = OrderStatus.PaymentFailed;
+
+        await this._storeContext.SaveChangesAsync();
     }
 
     // Handle what happens when a payment succeeds
-    // TODO: Implement logic to create order, send confirmation email, etc.
     private async Task HandlePaymentIntentSucceeded(PaymentIntent intent)
     {
-        throw new NotImplementedException();
+        var order = await this._storeContext.Orders
+             .Include(x => x.OrderItems)
+             .FirstOrDefaultAsync(x => x.PaymentIntentId == intent.Id)
+                 ?? throw new Exception("Order not found");
+        if (order.GetTotal() != intent.Amount)
+        {
+            order.OrderStatus = OrderStatus.PaymentMismatch;
+        }
+        else
+        {
+            order.OrderStatus = OrderStatus.PaymentReceived;
+        }
+
+        var basket = await this._storeContext.Baskets.FirstOrDefaultAsync(x =>
+            x.PaymentIntentId == intent.Id);
+
+        if (basket != null) this._storeContext.Baskets.Remove(basket);
+
+        await this._storeContext.SaveChangesAsync();
     }
 
     // Security method: Verifies the webhook actually came from Stripe

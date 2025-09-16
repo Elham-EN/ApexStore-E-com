@@ -5,6 +5,7 @@ namespace API.Models.OrderAggregate
     {
         Pending,
         PaymentReceived,
-        PaymentFailed
+        PaymentFailed,
+        PaymentMismatch
     }
 }
