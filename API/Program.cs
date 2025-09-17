@@ -73,7 +73,10 @@ var app = builder.Build();
 // Middleware: Configure the HTTP request pipeline.
 
 // Usage in the pipeline - positioned first
-app.UseMiddleware<ExceptionMiddleware>(); 
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
@@ -100,6 +103,8 @@ app.MapControllers();
 
 // For Identity API Endpoints (give us the endpoints) e.g. //api/login
 app.MapGroup("api").MapIdentityApi<User>();
+
+app.MapFallbackToController("Index", "Fallback");
 
 // Seeding Data to the Database
 await DbInitializer.InitDb(app);
