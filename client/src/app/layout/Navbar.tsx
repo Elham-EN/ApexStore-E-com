@@ -81,18 +81,22 @@ export default function Navbar(): React.ReactElement {
             </ListItemButton>
           </ListItem>
         ))}
-        <Divider />
-        {rightLinks.map(({ title, path }) => (
-          <ListItem key={path} disablePadding>
-            <ListItemButton
-              component={NavLink}
-              to={path}
-              sx={{ textAlign: "center" }}
-            >
-              <ListItemText primary={title.toUpperCase()} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {!user && (
+          <>
+            <Divider />
+            {rightLinks.map(({ title, path }) => (
+              <ListItem key={path} disablePadding>
+                <ListItemButton
+                  component={NavLink}
+                  to={path}
+                  sx={{ textAlign: "center" }}
+                >
+                  <ListItemText primary={title.toUpperCase()} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </>
+        )}
       </List>
     </Box>
   );
