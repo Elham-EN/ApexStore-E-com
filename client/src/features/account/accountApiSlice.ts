@@ -5,7 +5,6 @@ import type { LoginSchema } from "@/lib/schemas/loginSchema";
 import type { RegisterSchema } from "@/lib/schemas/registerSchema";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { toast } from "react-toastify";
-import { ur } from "zod/v4/locales";
 
 export const accountApiSlice = createApi({
   reducerPath: "accountApi",
