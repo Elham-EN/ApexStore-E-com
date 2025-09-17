@@ -41,7 +41,7 @@ export default function UserMenu({ user }: FadeMenuProps) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem component={Link} to="/profile">
           <ListItemIcon>
             <Person />
             <ListItemText>My profile</ListItemText>

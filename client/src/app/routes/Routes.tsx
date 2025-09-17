@@ -16,6 +16,7 @@ import RequireGuest from "./RequireGuest";
 import CheckoutSuccess from "@/features/checkout/components/CheckoutSuccess";
 import OrderPage from "@/features/orders/OrderPage";
 import OrderDetailsPage from "@/features/orders/OrderDetailsPage";
+import ProfilePage from "@/features/account/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
           { path: "/checkout/success", element: <CheckoutSuccess /> },
           { path: "/orders", element: <OrderPage /> },
           { path: "/orders/:id", element: <OrderDetailsPage /> },
+          { path: "/profile", element: <ProfilePage /> },
         ],
       },
       // Guest-only routes (redirect if authenticated)

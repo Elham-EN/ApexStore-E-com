@@ -14,10 +14,10 @@ namespace API.Controllers;
 
 public class PaymentsController : BaseApiController
 {
-    private PaymentsService _paymentsService;
-    private StoreContext _storeContext;
-    private IConfiguration _config; // Access to app settings (like Stripe secrets)
-    private ILogger<PaymentsController> _logger; // For logging errors and info
+    private readonly PaymentsService _paymentsService;
+    private readonly StoreContext _storeContext;
+    private readonly IConfiguration _config; // Access to app settings (like Stripe secrets)
+    private readonly ILogger<PaymentsController> _logger; // For logging errors and info
 
     public PaymentsController(PaymentsService paymentsService, StoreContext storeContext,
         IConfiguration config, ILogger<PaymentsController> logger)
@@ -150,14 +150,31 @@ public class PaymentsController : BaseApiController
     {
         try
         {
+            var whSecret = this._config["StripeSettings:WhSecret"];
+            if (string.IsNullOrEmpty(whSecret))
+            {
+                this._logger.LogError("Webhook secret not configured");
+                throw new StripeException("Webhook secret not configured");
+            }
+
+            var signature = Request.Headers["Stripe-Signature"].ToString();
+            if (string.IsNullOrEmpty(signature))
+            {
+                this._logger.LogError("Missing Stripe-Signature header");
+                throw new StripeException("Missing signature header");
+            }
+
             // Stripe signs each webhook with a secret - we verify it matches
-            return EventUtility.ConstructEvent(json, Request.Headers["Stripe-Signature"],
-                this._config["StripeSettings:WhSecret"]);
+            return EventUtility.ConstructEvent(json, signature, whSecret, throwOnApiVersionMismatch: false);
+        }
+        catch (StripeException)
+        {
+            throw; // Re-throw Stripe exceptions as-is
         }
         catch (Exception ex)
         {
             this._logger.LogError(ex, "Failed to construct stripe event");
-            throw new StripeException("Invalid signature");
+            throw new StripeException("Failed to construct event");
         }
     }
 }
