@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import { Box, Container } from "@mui/material";
 import { useColorScheme } from "@mui/material/styles";
 import Navbar from "@/app/layout/Navbar";
+import Footer from "./Footer";
 
 function App() {
   const { mode } = useColorScheme();
@@ -23,6 +24,7 @@ function App() {
           <Outlet />
         </Container>
       </Box>
+      <Footer />
     </>
   );
 }
