@@ -43,7 +43,7 @@ export const baseQueryWithErrorHandling = async (
   // api.dispatch is a Redux store dispatch function that lets you
   // dispatch actions to your Redux store from within the base query.
   api.dispatch(startLoading());
-  await sleep();
+  if (import.meta.env.DEV) await sleep();
   // Fetching data from API
   const result = await customBaseQuery(args, api, extraOptions);
   // Stop Loading
