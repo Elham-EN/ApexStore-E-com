@@ -5,6 +5,7 @@ import type { LoginSchema } from "@/lib/schemas/loginSchema";
 import type { RegisterSchema } from "@/lib/schemas/registerSchema";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { toast } from "react-toastify";
+import { ur } from "zod/v4/locales";
 
 export const accountApiSlice = createApi({
   reducerPath: "accountApi",
@@ -95,6 +96,13 @@ export const accountApiSlice = createApi({
           console.error(error);
         }
       },
+    }),
+    forgotPassword: builder.mutation<void, { email: string }>({
+      query: (email) => ({
+        url: "/forgotPassword",
+        method: "POST",
+        body: email,
+      }),
     }),
   }),
 });

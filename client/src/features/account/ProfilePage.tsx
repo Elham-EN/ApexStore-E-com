@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useUserInfoQuery } from "./accountApiSlice";
 
@@ -25,6 +25,14 @@ export default function ProfilePage(): React.ReactElement {
           <Typography>{user.email}</Typography>
         </Box>
       </Paper>
+      <Box display={"flex"} justifyContent={"flex-end"} gap={4} marginTop={3}>
+        <Button variant="contained" sx={{ ":hover": { color: "#ffffff" } }}>
+          Reset Password
+        </Button>
+        <Button variant="outlined" color="error">
+          Delete account
+        </Button>
+      </Box>
     </Container>
   );
 }
