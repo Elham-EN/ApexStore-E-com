@@ -1,13 +1,11 @@
 import {
   Box,
   Button,
-  Container,
   FormControlLabel,
   Paper,
   Step,
   StepLabel,
   Stepper,
-  Typography,
   Checkbox,
 } from "@mui/material";
 import {
@@ -37,8 +35,8 @@ import { useCreateOrderMutation } from "@/features/orders/orderApiSlice";
 export default function CheckoutStepper(): React.ReactElement {
   // Keep track of which step we're currently on
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const [address, setAddress] = React.useState<Partial<Address>>();
-  const [fullname, setFullName] = React.useState<string>("");
+  // const [address, setAddress] = React.useState<Partial<Address>>();
+  // const [fullname, setFullName] = React.useState<string>("");
   const [savedAddressChecked, setSaveAddressChecked] =
     React.useState<boolean>(false);
   const [addressComplete, setAddressComplete] = React.useState<boolean>(false);
@@ -55,20 +53,25 @@ export default function CheckoutStepper(): React.ReactElement {
   const stripe = useStripe();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (data) {
-      const { name, ...restAddress } = data;
-      setFullName(name || "");
-      setAddress({
-        line1: restAddress.line1 || "",
-        line2: restAddress.line2 || "",
-        city: restAddress.city || "",
-        state: restAddress.state || "",
-        postal_code: restAddress.postal_code || "",
-        country: restAddress.country || "",
-      });
-    }
-  }, [data]);
+  // React.useEffect(() => {
+  //   if (data) {
+  //     const { name, ...restAddress } = data;
+  //     setFullName(name || "");
+  //     setAddress({
+  //       line1: restAddress.line1 || "",
+  //       line2: restAddress.line2 || "",
+  //       city: restAddress.city || "",
+  //       state: restAddress.state || "",
+  //       postal_code: restAddress.postal_code || "",
+  //       country: restAddress.country || "",
+  //     });
+  //   }
+  // }, [data]);
+
+  let fullname, address;
+  if (data) {
+    ({ name: fullname, ...address } = data);
+  }
 
   const steps: string[] = ["Address", "Payment", "Review"];
 
@@ -176,6 +179,7 @@ export default function CheckoutStepper(): React.ReactElement {
       <Box sx={{ mt: 4 }}>
         <Box sx={{ display: activeStep === 0 ? "block" : "none" }}>
           {data && address ? (
+            // User has a saved address
             <AddressElement
               options={{
                 mode: "shipping",
@@ -187,11 +191,13 @@ export default function CheckoutStepper(): React.ReactElement {
               onChange={handleAddressChange}
             />
           ) : (
-            <Container maxWidth="lg" sx={{ py: 4 }}>
-              <Typography variant="h5" align="center">
-                Loading address...
-              </Typography>
-            </Container>
+            // User has no saved address - show empty form
+            <AddressElement
+              options={{
+                mode: "shipping",
+              }}
+              onChange={handleAddressChange}
+            />
           )}
           <FormControlLabel
             sx={{
