@@ -333,7 +333,7 @@ API/.ionide/
 API/FodyWeavers.xsd
 
 # Entity Framework Core migrations
-API/**/Migrations/
+# API/**/Migrations/
 
 # SQLite database files
 API/*.db
