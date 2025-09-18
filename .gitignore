@@ -352,7 +352,7 @@ API/*.sqlite3
 # Environment files
 .env
 .env.local
-.env.production
+# .env.production
 .env.staging
 API/.env
 API/.env.local
