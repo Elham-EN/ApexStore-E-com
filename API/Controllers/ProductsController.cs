@@ -21,7 +21,7 @@ public class ProductsController : BaseApiController
         this._context = context;
         this.mapper = mapper;
     }
-    
+
     [HttpGet]
     // Route: https://localhost:5001/api/products
     public async Task<ActionResult<List<Product>>> GetListOfProducts(
@@ -76,11 +76,10 @@ public class ProductsController : BaseApiController
 
         return Ok(new { brands, types });
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProduct(
-        CreateProductDto productDto)
+    public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
     {
         var product = this.mapper.Map<Product>(productDto);
 
@@ -94,6 +93,22 @@ public class ProductsController : BaseApiController
         }
 
         return BadRequest("Problem creating new product");
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPut]
+    public async Task<ActionResult> UpdateProduct(UpdateProductDto updateProductDto)
+    {
+        var existingProduct = await this._context.Products.FindAsync(updateProductDto.Id);
+        if (existingProduct == null) return NotFound();
+
+        this.mapper.Map(updateProductDto, existingProduct);
+
+        var result = await this._context.SaveChangesAsync() > 0;
+
+        if (result) return NoContent();
+
+        return BadRequest("Problem updating product");
     }
 }
 
