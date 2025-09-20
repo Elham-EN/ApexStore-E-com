@@ -110,5 +110,23 @@ public class ProductsController : BaseApiController
 
         return BadRequest("Problem updating product");
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("id")]
+    public async Task<ActionResult> DeleteProduct(int id)
+    {
+        // Fetch existing product based on the id
+        var existingProduct = await this._context.Products.FindAsync(id);
+        if (existingProduct == null) return NotFound();
+
+        // Remove the existing product from the Products table in DB
+        this._context.Products.Remove(existingProduct);
+
+        var result = await this._context.SaveChangesAsync() > 0;
+
+        if (result) return Ok();
+
+        return BadRequest("Failed to delete the product");
+    }
 }
 
