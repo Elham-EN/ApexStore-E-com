@@ -9,6 +9,9 @@ var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Get license key from configuration
+var autoMapperLicenceKey = builder.Configuration["AutoMapper:LicenseKey"];
+
 // Add services to the container: We can inject them into other classes 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -34,6 +37,11 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();  // ✅ Allow all headers
         });
 });
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.LicenseKey = autoMapperLicenceKey;
+},AppDomain.CurrentDomain.GetAssemblies());
 
 // This middleware is registered as a transient service in the DI container
 // because it implement the 'IMiddleware' interface and has constructor 
