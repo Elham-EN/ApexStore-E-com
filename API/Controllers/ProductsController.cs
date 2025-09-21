@@ -3,6 +3,7 @@ using API.DTOs;
 using API.Extensions;
 using API.Models;
 using API.RequestHelpers;
+using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,14 @@ public class ProductsController : BaseApiController
 {
     private readonly StoreContext _context;
     private readonly IMapper mapper;
+    private readonly ImageService imageService;
 
-    public ProductsController(StoreContext context, IMapper mapper)
+    public ProductsController(StoreContext context, IMapper mapper,
+        ImageService imageService)
     {
         this._context = context;
         this.mapper = mapper;
+        this.imageService = imageService;
     }
 
     [HttpGet]
@@ -79,9 +83,21 @@ public class ProductsController : BaseApiController
 
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
+    [Consumes("multipart/form-data")]
+    public async Task<ActionResult<Product>> CreateProduct([FromForm] CreateProductDto productDto)
     {
         var product = this.mapper.Map<Product>(productDto);
+
+        if (productDto.File != null)
+        {
+            var imageResult = await this.imageService.AddImageAsync(productDto.File);
+            if (imageResult.Error != null)
+            {
+                return BadRequest(imageResult.Error.Message);
+            }
+            product.PictureUrl = imageResult.SecureUrl.AbsoluteUri;
+            product.PublicId = imageResult.PublicId;
+        }
 
         this._context.Products.Add(product);
 

@@ -12,7 +12,7 @@ public class CreateProductDto
     [Range(100, double.PositiveInfinity)]
     public long Price { get; set; }
     [Required]
-    public string PictureUrl { get; set; } = string.Empty;
+    public IFormFile File { get; set; } = null!;
     [Required]
     public string Type { get; set; } = string.Empty;
     [Required]
