@@ -19,6 +19,7 @@
   <!-- File Inclusions - Specific files to include/exclude -->
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="15.0.1" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.27.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7" />

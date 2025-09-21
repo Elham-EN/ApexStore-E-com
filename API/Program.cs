@@ -57,6 +57,8 @@ builder.Services.AddTransient<ExceptionMiddleware>();
 // created, then it also create new instance of payment service as well
 builder.Services.AddScoped<PaymentsService>();
 
+builder.Services.AddScoped<ImageService>();
+
 // Sets up Identity with built-in API endpoints for user registration, 
 // login, logout, and account management
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
