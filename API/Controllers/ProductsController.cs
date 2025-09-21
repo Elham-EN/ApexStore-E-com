@@ -113,12 +113,29 @@ public class ProductsController : BaseApiController
 
     [Authorize(Roles = "Admin")]
     [HttpPut]
-    public async Task<ActionResult> UpdateProduct(UpdateProductDto updateProductDto)
+    [Consumes("multipart/form-data")]
+    public async Task<ActionResult> UpdateProduct([FromForm] UpdateProductDto updateProductDto)
     {
         var existingProduct = await this._context.Products.FindAsync(updateProductDto.Id);
         if (existingProduct == null) return NotFound();
 
+        // Only map non-null properties
         this.mapper.Map(updateProductDto, existingProduct);
+
+        if (updateProductDto.File != null)
+        {
+            var imageResult = await imageService.AddImageAsync(updateProductDto.File);
+            if (imageResult.Error != null)
+            {
+                return BadRequest(imageResult.Error.Message);
+            }
+            if (!string.IsNullOrEmpty(existingProduct.PublicId))
+            {
+                await imageService.DeleteImageAsync(existingProduct.PublicId);
+            }
+            existingProduct.PictureUrl = imageResult.SecureUrl.AbsoluteUri;
+            existingProduct.PublicId = imageResult.PublicId;
+        }
 
         var result = await this._context.SaveChangesAsync() > 0;
 
@@ -134,6 +151,11 @@ public class ProductsController : BaseApiController
         // Fetch existing product based on the id
         var existingProduct = await this._context.Products.FindAsync(id);
         if (existingProduct == null) return NotFound();
+
+        if (!string.IsNullOrEmpty(existingProduct.PublicId))
+        {
+            await imageService.DeleteImageAsync(existingProduct.PublicId);
+        }
 
         // Remove the existing product from the Products table in DB
         this._context.Products.Remove(existingProduct);
