@@ -4,6 +4,7 @@ using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using API.Services;
+using API.RequestHelpers;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 var autoMapperLicenceKey = builder.Configuration["AutoMapper:LicenseKey"];
 
 // Add services to the container: We can inject them into other classes 
+builder.Services.Configure<CloudinarySettings>(builder.Configuration
+    .GetSection("Cloudinary"));
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
