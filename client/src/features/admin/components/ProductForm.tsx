@@ -1,15 +1,16 @@
+import AppTextInput from "@/app/components/AppTextInput";
 import {
   createProductSchema,
   type CreateProductSchema,
 } from "@/lib/schemas/createProductSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 export default function ProductForm(): React.ReactElement {
   const { control, handleSubmit } = useForm<CreateProductSchema>({
-    mode: "onTouched",
+    // mode: "onTouched",
     resolver: zodResolver(createProductSchema),
   });
 
@@ -25,13 +26,10 @@ export default function ProductForm(): React.ReactElement {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid size={12}>
-            <Controller
-              render={({ field }) => (
-                <TextField {...field} fullWidth label={"name"} />
-              )}
-              name="name"
+            <AppTextInput
               control={control}
-              defaultValue=""
+              name="name"
+              label={"Product name"}
             />
           </Grid>
         </Grid>
