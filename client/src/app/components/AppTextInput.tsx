@@ -28,6 +28,13 @@ export default function AppTextInput<T extends FieldValues>(
       variant="outlined"
       error={Boolean(fieldState.error)}
       helperText={fieldState.error?.message}
+      onChange={(e) => {
+        let value: string | number = e.target.value;
+        if (props.type === "number") {
+          value = e.target.value === "" ? "" : Number(e.target.value);
+        }
+        field.onChange(value);
+      }}
     />
   );
 }
