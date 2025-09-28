@@ -1,3 +1,4 @@
+import AppDropzone from "@/app/components/AppDropzone";
 import AppSelectInput from "@/app/components/AppSelectInput";
 import AppTextInput from "@/app/components/AppTextInput";
 import { useFetchFiltersQuery } from "@/features/catalog/catalogApiSlice";
@@ -11,10 +12,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export default function ProductForm(): React.ReactElement {
-  const { control, handleSubmit } = useForm<CreateProductSchema>({
+  const { control, handleSubmit, watch } = useForm<CreateProductSchema>({
     mode: "onTouched",
     resolver: zodResolver(createProductSchema),
   });
+
+  const watchFile = watch("file");
+  const filePreview = watchFile ? URL.createObjectURL(watchFile) : null;
 
   const { data } = useFetchFiltersQuery();
 
@@ -81,8 +85,20 @@ export default function ProductForm(): React.ReactElement {
               rows={4}
             />
           </Grid>
-          <Grid size={12}>
-            <AppTextInput control={control} name="file" label={"Image"} />
+          <Grid
+            size={12}
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <AppDropzone control={control} name="file" />
+            {watchFile && (
+              <img
+                src={filePreview || undefined}
+                alt="preview of image"
+                style={{ maxHeight: 200 }}
+              />
+            )}
           </Grid>
         </Grid>
         <Box display={"flex"} justifyContent={"space-between"} sx={{ mt: 3 }}>

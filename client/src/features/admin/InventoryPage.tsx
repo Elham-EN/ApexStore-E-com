@@ -35,7 +35,12 @@ export default function InventoryPage(): React.ReactElement {
         </Typography>
         <Button
           onClick={() => setEditMode(true)}
-          sx={{ m: 2 }}
+          sx={{
+            m: 2,
+            ":hover": {
+              color: "#ffffff",
+            },
+          }}
           size="large"
           variant="contained"
         >
