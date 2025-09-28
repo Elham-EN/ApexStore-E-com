@@ -1,4 +1,6 @@
+import AppSelectInput from "@/app/components/AppSelectInput";
 import AppTextInput from "@/app/components/AppTextInput";
+import { useFetchFiltersQuery } from "@/features/catalog/catalogApiSlice";
 import {
   createProductSchema,
   type CreateProductSchema,
@@ -13,6 +15,8 @@ export default function ProductForm(): React.ReactElement {
     mode: "onTouched",
     resolver: zodResolver(createProductSchema),
   });
+
+  const { data } = useFetchFiltersQuery();
 
   const onSubmit = (data: CreateProductSchema) => {
     console.log(data);
@@ -33,10 +37,24 @@ export default function ProductForm(): React.ReactElement {
             />
           </Grid>
           <Grid size={6}>
-            <AppTextInput control={control} name="brand" label={"Brand"} />
+            {data?.brands && (
+              <AppSelectInput
+                control={control}
+                name="brand"
+                label="Brand"
+                items={data.brands}
+              />
+            )}
           </Grid>
           <Grid size={6}>
-            <AppTextInput control={control} name="type" label={"Type"} />
+            {data?.types && (
+              <AppSelectInput
+                control={control}
+                name="type"
+                label="Type"
+                items={data.types}
+              />
+            )}
           </Grid>
           <Grid size={6}>
             <AppTextInput
