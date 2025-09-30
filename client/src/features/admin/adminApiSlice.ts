@@ -9,10 +9,22 @@ export const adminApi = createApi({
   endpoints: (builder) => ({
     createProduct: builder.mutation<Product, CreateProductSchema>({
       query: (data: CreateProductSchema) => {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("description", data.description);
+        formData.append("price", data.price.toString());
+        formData.append("type", data.type);
+        formData.append("brand", data.brand);
+        formData.append("quantityInStock", data.quantityInStock.toString());
+
+        if (data.file) {
+          formData.append("file", data.file);
+        }
+
         return {
-          url: "/Products",
+          url: "Products",
           method: "POST",
-          body: data,
+          body: formData,
         };
       },
     }),
@@ -21,10 +33,23 @@ export const adminApi = createApi({
       { id: number; data: CreateProductSchema }
     >({
       query: ({ id, data }) => {
+        const formData = new FormData();
+        formData.append("id", id.toString());
+        formData.append("name", data.name);
+        formData.append("description", data.description);
+        formData.append("price", data.price.toString());
+        formData.append("type", data.type);
+        formData.append("brand", data.brand);
+        formData.append("quantityInStock", data.quantityInStock.toString());
+
+        if (data.file) {
+          formData.append("file", data.file);
+        }
+
         return {
-          url: "/Products",
+          url: "Products",
           method: "PUT",
-          body: { ...data, id },
+          body: formData,
         };
       },
     }),

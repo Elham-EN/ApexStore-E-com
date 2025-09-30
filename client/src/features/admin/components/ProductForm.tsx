@@ -11,17 +11,29 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import {
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} from "../adminApiSlice";
 
 type Props = {
   setEditMode: (value: boolean) => void;
   product: Product | null;
+  refetch: () => void;
 };
 
 export default function ProductForm({
   setEditMode,
   product,
+  refetch,
 }: Props): React.ReactElement {
-  const { control, handleSubmit, watch, reset } = useForm<CreateProductSchema>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<CreateProductSchema>({
     mode: "onTouched",
     resolver: zodResolver(createProductSchema),
   });
@@ -30,14 +42,28 @@ export default function ProductForm({
   const filePreview = watchFile ? URL.createObjectURL(watchFile) : null;
 
   const { data } = useFetchFiltersQuery();
-
-  const onSubmit = (data: CreateProductSchema) => {
-    console.log(data);
-  };
+  const [createProduct] = useCreateProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
 
   React.useEffect(() => {
     if (product) reset(product);
-  }, [product, reset]);
+    return () => {
+      if (filePreview) URL.revokeObjectURL(filePreview);
+    };
+  }, [product, reset, filePreview]);
+
+  const onSubmit = async (data: CreateProductSchema): Promise<void> => {
+    try {
+      if (product) await updateProduct({ id: product.id, data });
+      else await createProduct(data);
+      setEditMode(false);
+      refetch(); // Get latest list of product
+    } catch (error) {
+      console.log("====================================");
+      console.error(error);
+      console.log("====================================");
+    }
+  };
 
   return (
     <Box component={Paper} sx={{ p: 4, maxWidth: "lg", mx: "auto" }}>
@@ -128,7 +154,12 @@ export default function ProductForm({
           >
             Cancel
           </Button>
-          <Button variant="contained" color="success" type="submit">
+          <Button
+            loading={isSubmitting}
+            variant="contained"
+            color="success"
+            type="submit"
+          >
             Submit
           </Button>
         </Box>

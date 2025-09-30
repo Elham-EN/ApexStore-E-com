@@ -22,7 +22,7 @@ import { type Product } from "@/app/models/Product";
 
 export default function InventoryPage(): React.ReactElement {
   const productParams = useAppSelector((state) => state.catalog);
-  const { data: products } = useFetchProductsQuery(productParams);
+  const { data: products, refetch } = useFetchProductsQuery(productParams);
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = React.useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(
@@ -40,7 +40,13 @@ export default function InventoryPage(): React.ReactElement {
   };
 
   if (editMode)
-    return <ProductForm setEditMode={setEditMode} product={selectedProduct} />;
+    return (
+      <ProductForm
+        setEditMode={setEditMode}
+        product={selectedProduct}
+        refetch={refetch}
+      />
+    );
 
   return (
     <>
