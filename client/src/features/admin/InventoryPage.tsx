@@ -18,14 +18,24 @@ import { Delete, Edit } from "@mui/icons-material";
 import AppPagination from "@/app/components/AppPagination";
 import { setPageNumber } from "../catalog/catalogSlice";
 import ProductForm from "./components/ProductForm";
+import { type Product } from "@/app/models/Product";
 
 export default function InventoryPage(): React.ReactElement {
   const productParams = useAppSelector((state) => state.catalog);
   const { data: products } = useFetchProductsQuery(productParams);
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = React.useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(
+    null
+  );
 
-  if (editMode) return <ProductForm />;
+  const handleSelectProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setEditMode(true);
+  };
+
+  if (editMode)
+    return <ProductForm setEditMode={setEditMode} product={selectedProduct} />;
 
   return (
     <>
@@ -91,7 +101,10 @@ export default function InventoryPage(): React.ReactElement {
                     {product.quantityInStock}
                   </TableCell>
                   <TableCell align="right">
-                    <Button startIcon={<Edit />} />
+                    <Button
+                      startIcon={<Edit />}
+                      onClick={() => handleSelectProduct(product)}
+                    />
                     <Button startIcon={<Delete />} color="error" />
                   </TableCell>
                 </TableRow>

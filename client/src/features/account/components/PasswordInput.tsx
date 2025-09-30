@@ -8,12 +8,14 @@ interface PasswordInputProps {
   register: UseFormRegister<LoginSchema>;
   error?: boolean;
   helperText?: string;
+  disabled?: boolean;
 }
 
 export default function PasswordInput({
   register,
   error,
   helperText,
+  disabled,
 }: PasswordInputProps): React.ReactElement {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
@@ -27,6 +29,7 @@ export default function PasswordInput({
       {...register("password")}
       error={error}
       helperText={helperText}
+      disabled={disabled}
       slotProps={{
         input: {
           endAdornment: (
@@ -35,6 +38,7 @@ export default function PasswordInput({
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
                 edge="end"
+                disabled={disabled}
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
