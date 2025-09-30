@@ -63,182 +63,166 @@ public class DbInitializer
         var products = new List<Product>
         {
             new() {
-                Name = "Angular Speedster Board 2000",
-                Description =
-                    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 20000,
-                PictureUrl = "/images/products/sb-ang1.png",
-                Brand = "Angular",
-                Type = "Boards",
-                QuantityInStock = 100
+                Name = "Frieza Fourth Form",
+                Description = "Galactic tyrant in his most feared transformation. Detailed figure captures the menacing power of Frieza's final form.",
+                Price = 4599,
+                PictureUrl = "/images/products/frieza-fourth-form.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Green Angular Board 3000",
-                Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
-                Price = 15000,
-                PictureUrl = "/images/products/sb-ang2.png",
-                Brand = "Angular",
-                Type = "Boards",
-                QuantityInStock = 100
+                Name = "Gaara of the Sand",
+                Description = "Fifth Kazekage with signature gourd. Premium collectible showcasing Gaara's mastery over sand manipulation.",
+                Price = 3899,
+                PictureUrl = "/images/products/gaara-sand.jpg",
+                Brand = "Naruto",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Core Board Speed Rush 3",
-                Description =
-                    "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-                Price = 18000,
-                PictureUrl = "/images/products/sb-core1.png",
-                Brand = "NetCore",
-                Type = "Boards",
-                QuantityInStock = 100
+                Name = "Itachi Uchiha",
+                Description = "Legendary ANBU member and Akatsuki operative. Highly detailed figure of the Uchiha prodigy with Sharingan.",
+                Price = 4299,
+                PictureUrl = "/images/products/itachi.jpg",
+                Brand = "Naruto",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Net Core Super Board",
-                Description =
-                    "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-                Price = 30000,
-                PictureUrl = "/images/products/sb-core2.png",
-                Brand = "NetCore",
-                Type = "Boards",
-                QuantityInStock = 100
+                Name = "Kakashi Hatake",
+                Description = "Copy Ninja of the Hidden Leaf. Iconic figure featuring the legendary Sixth Hokage in his signature pose.",
+                Price = 3999,
+                PictureUrl = "/images/products/kakashi.jpg",
+                Brand = "Naruto",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "React Board Super Whizzy Fast",
-                Description =
-                    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 25000,
-                PictureUrl = "/images/products/sb-react1.png",
-                Brand = "React",
-                Type = "Boards",
-                QuantityInStock = 100
+                Name = "Majin Buu",
+                Description = "Ancient magical entity of pure destruction. Collectible showcasing the fearsome pink terror of the universe.",
+                Price = 4199,
+                PictureUrl = "/images/products/majin-buu.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Typescript Entry Board",
-                Description =
-                    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 12000,
-                PictureUrl = "/images/products/sb-ts1.png",
-                Brand = "TypeScript",
-                Type = "Boards",
-                QuantityInStock = 100
+                Name = "Minato Namikaze",
+                Description = "Yellow Flash of the Hidden Leaf. Premium figure of the Fourth Hokage with Flying Thunder God technique.",
+                Price = 4499,
+                PictureUrl = "/images/products/minato-namikaze.jpg",
+                Brand = "Naruto",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Core Blue Hat",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 1000,
-                PictureUrl = "/images/products/hat-core1.png",
-                Brand = "NetCore",
-                Type = "Hats",
-                QuantityInStock = 100
+                Name = "Monkey D. Luffy Special Edition",
+                Description = "Future Pirate King in action pose. Limited edition figure of the Straw Hat captain with Gear abilities.",
+                Price = 4799,
+                PictureUrl = "/images/products/monkey-d-luffy-special-edition.jpg",
+                Brand = "One Piece",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Green React Woolen Hat",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 8000,
-                PictureUrl = "/images/products/hat-react1.png",
-                Brand = "React",
-                Type = "Hats",
-                QuantityInStock = 100
+                Name = "Obito Uchiha",
+                Description = "Masked man behind the Fourth Shinobi War. Detailed collectible featuring dual Sharingan and Rinnegan.",
+                Price = 4399,
+                PictureUrl = "/images/products/obito-uchiha.jpg",
+                Brand = "Naruto",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Purple React Woolen Hat",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 1500,
-                PictureUrl = "/images/products/hat-react2.png",
-                Brand = "React",
-                Type = "Hats",
-                QuantityInStock = 100
+                Name = "Red Hair Shanks",
+                Description = "Emperor of the Sea and Luffy's inspiration. Premium figure of one of the most powerful pirates.",
+                Price = 4999,
+                PictureUrl = "/images/products/red-hair-shanks.jpg",
+                Brand = "One Piece",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Blue Code Gloves",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 1800,
-                PictureUrl = "/images/products/glove-code1.png",
-                Brand = "VS Code",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Name = "Roronoa Zoro",
+                Description = "Three-sword style master swordsman. Iconic figure of the Straw Hat crew's first mate in battle stance.",
+                Price = 4299,
+                PictureUrl = "/images/products/roronoa-zoro.jpg",
+                Brand = "One Piece",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Green Code Gloves",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 1500,
-                PictureUrl = "/images/products/glove-code2.png",
-                Brand = "VS Code",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Name = "Sasuke Special Edition",
+                Description = "Last Uchiha survivor with Rinnegan. Limited edition collectible featuring advanced dojutsu abilities.",
+                Price = 4699,
+                PictureUrl = "/images/products/sasuke-special-edition.jpg",
+                Brand = "Naruto",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Purple React Gloves",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 1600,
-                PictureUrl = "/images/products/glove-react1.png",
-                Brand = "React",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Name = "Super Saiyan 3 Son Goku",
+                Description = "Ultimate Saiyan transformation with flowing golden hair. Detailed figure capturing SS3 Goku's raw power.",
+                Price = 4899,
+                PictureUrl = "/images/products/super-saiyan-3-son-goku.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Green React Gloves",
-                Description =
-                    "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 1400,
-                PictureUrl = "/images/products/glove-react2.png",
-                Brand = "React",
-                Type = "Gloves",
-                QuantityInStock = 100
+                Name = "Super Saiyan Black Goku",
+                Description = "Divine warrior with twisted justice. Premium collectible of Zamasu in Goku's body with rosé aura.",
+                Price = 4799,
+                PictureUrl = "/images/products/super-saiyan-black-goku.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Redis Red Boots",
-                Description =
-                    "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-                Price = 25000,
-                PictureUrl = "/images/products/boot-redis1.png",
-                Brand = "Redis",
-                Type = "Boots",
-                QuantityInStock = 100
+                Name = "Super Saiyan Broly Full Power",
+                Description = "Legendary Super Saiyan at maximum strength. Massive figure showcasing Broly's unstoppable berserker form.",
+                Price = 4999,
+                PictureUrl = "/images/products/super-saiyan-broly-full-power.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Core Red Boots",
-                Description =
-                    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                Price = 18999,
-                PictureUrl = "/images/products/boot-core2.png",
-                Brand = "NetCore",
-                Type = "Boots",
-                QuantityInStock = 100
+                Name = "Super Saiyan God Son Goku",
+                Description = "Divine ki-infused warrior with crimson aura. Collectible featuring Goku's godly transformation.",
+                Price = 4699,
+                PictureUrl = "/images/products/super-saiyan-god-son-goku.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Core Purple Boots",
-                Description =
-                    "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
-                Price = 19999,
-                PictureUrl = "/images/products/boot-core1.png",
-                Brand = "NetCore",
-                Type = "Boots",
-                QuantityInStock = 100
+                Name = "Ultimate Gohan",
+                Description = "Mystic power unlocked by Elder Kai. Premium figure of Gohan at his absolute peak potential.",
+                Price = 4399,
+                PictureUrl = "/images/products/super-saiyan-ultimate-gohan.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Angular Purple Boots",
-                Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
-                Price = 15000,
-                PictureUrl = "/images/products/boot-ang2.png",
-                Brand = "Angular",
-                Type = "Boots",
-                QuantityInStock = 100
+                Name = "Super Saiyan Vegeta",
+                Description = "Saiyan Prince in iconic golden transformation. Classic collectible of Vegeta's legendary power-up.",
+                Price = 4499,
+                PictureUrl = "/images/products/super-saiyan-vegeta.jpg",
+                Brand = "Dragon Ball",
+                Type = "Figures",
+                QuantityInStock = 50
             },
             new() {
-                Name = "Angular Blue Boots",
-                Description =
-                    "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-                Price = 18000,
-                PictureUrl = "/images/products/boot-ang1.png",
-                Brand = "Angular",
-                Type = "Boots",
-                QuantityInStock = 100
+                Name = "Whitebeard Pirate",
+                Description = "Strongest man in the world and legendary captain. Epic figure of Edward Newgate with his bisento.",
+                Price = 4999,
+                PictureUrl = "/images/products/whitebaeard-pirate.jpg",
+                Brand = "One Piece",
+                Type = "Figures",
+                QuantityInStock = 50
             },
         };
 
