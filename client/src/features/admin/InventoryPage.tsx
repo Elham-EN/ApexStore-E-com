@@ -19,10 +19,12 @@ import AppPagination from "@/app/components/AppPagination";
 import { setPageNumber } from "../catalog/catalogSlice";
 import ProductForm from "./components/ProductForm";
 import { type Product } from "@/app/models/Product";
+import { useDeleteProductMutation } from "./adminApiSlice";
 
 export default function InventoryPage(): React.ReactElement {
   const productParams = useAppSelector((state) => state.catalog);
   const { data: products, refetch } = useFetchProductsQuery(productParams);
+  const [deleteProduct] = useDeleteProductMutation();
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = React.useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = React.useState<Product | null>(
@@ -37,6 +39,17 @@ export default function InventoryPage(): React.ReactElement {
   const handleCreateProduct = () => {
     setSelectedProduct(null);
     setEditMode(true);
+  };
+
+  const handleDeleteProduct = async (id: number) => {
+    try {
+      await deleteProduct(id);
+      refetch();
+    } catch (error) {
+      console.log("====================================");
+      console.error(error);
+      console.log("====================================");
+    }
   };
 
   if (editMode)
@@ -116,7 +129,11 @@ export default function InventoryPage(): React.ReactElement {
                       startIcon={<Edit />}
                       onClick={() => handleEditProduct(product)}
                     />
-                    <Button startIcon={<Delete />} color="error" />
+                    <Button
+                      startIcon={<Delete />}
+                      color="error"
+                      onClick={() => handleDeleteProduct(product.id)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
