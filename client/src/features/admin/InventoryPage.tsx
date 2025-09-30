@@ -29,8 +29,13 @@ export default function InventoryPage(): React.ReactElement {
     null
   );
 
-  const handleSelectProduct = (product: Product) => {
+  const handleEditProduct = (product: Product) => {
     setSelectedProduct(product);
+    setEditMode(true);
+  };
+
+  const handleCreateProduct = () => {
+    setSelectedProduct(null);
     setEditMode(true);
   };
 
@@ -44,7 +49,7 @@ export default function InventoryPage(): React.ReactElement {
           Inventory
         </Typography>
         <Button
-          onClick={() => setEditMode(true)}
+          onClick={handleCreateProduct}
           sx={{
             m: 2,
             ":hover": {
@@ -103,7 +108,7 @@ export default function InventoryPage(): React.ReactElement {
                   <TableCell align="right">
                     <Button
                       startIcon={<Edit />}
-                      onClick={() => handleSelectProduct(product)}
+                      onClick={() => handleEditProduct(product)}
                     />
                     <Button startIcon={<Delete />} color="error" />
                   </TableCell>
