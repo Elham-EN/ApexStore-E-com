@@ -80,6 +80,10 @@ export const baseQueryWithErrorHandling = async (
         toast.error(unauthorizedError.title);
         break;
       }
+      case 403: {
+        toast.error("403 Forbidden: You are not the admin");
+        break;
+      }
       case 404: {
         const notFoundError = data as OtherError;
         router.navigate("/not-found", { state: { error: notFoundError } });

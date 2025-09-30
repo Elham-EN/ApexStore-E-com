@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import type { User } from "../models/User";
 import { Divider, ListItemIcon, ListItemText } from "@mui/material";
-import { History, Logout, Person } from "@mui/icons-material";
+import { History, Inventory, Logout, Person } from "@mui/icons-material";
 import { useLogoutMutation } from "@/features/account/accountApiSlice";
 import { Link } from "react-router";
 
@@ -53,6 +53,14 @@ export default function UserMenu({ user }: FadeMenuProps) {
           </ListItemIcon>
           <ListItemText>My order</ListItemText>
         </MenuItem>
+        {user.roles.includes("Admin") && (
+          <MenuItem component={Link} to="/inventory">
+            <ListItemIcon>
+              <Inventory />
+            </ListItemIcon>
+            <ListItemText>Inventory</ListItemText>
+          </MenuItem>
+        )}
         <Divider />
         <MenuItem onClick={logout}>
           <ListItemIcon>

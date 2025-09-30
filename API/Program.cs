@@ -4,12 +4,18 @@ using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using API.Services;
+using API.RequestHelpers;
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Get license key from configuration
+var autoMapperLicenceKey = builder.Configuration["AutoMapper:LicenseKey"];
+
 // Add services to the container: We can inject them into other classes 
+builder.Services.Configure<CloudinarySettings>(builder.Configuration
+    .GetSection("Cloudinary"));
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -35,6 +41,11 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.LicenseKey = autoMapperLicenceKey;
+},AppDomain.CurrentDomain.GetAssemblies());
+
 // This middleware is registered as a transient service in the DI container
 // because it implement the 'IMiddleware' interface and has constructor 
 // dependencies. The transient lifetime ensures that a fresh instance of the
@@ -45,6 +56,8 @@ builder.Services.AddTransient<ExceptionMiddleware>();
 // payment controller class & injected into it. When payment controller is
 // created, then it also create new instance of payment service as well
 builder.Services.AddScoped<PaymentsService>();
+
+builder.Services.AddScoped<ImageService>();
 
 // Sets up Identity with built-in API endpoints for user registration, 
 // login, logout, and account management
