@@ -63,7 +63,7 @@ APex Store is a full-stack e-commerce platform designed specifically for anime e
 - **Package Manager**: npm
 - **Version Control**: Git
 - **Code Quality**: ESLint, Prettier
-- **API Testing**: Swagger UI, Postman
+- **API Testing**: Swagger UI
 - **Database Tools**: Azure Data Studio, SQL Server Management Studio
 
 ## 🚀 Getting Started
@@ -135,7 +135,7 @@ Create `appsettings.Development.json` in API folder:
 Create `.env.local` in client folder:
 
 ```env
-VITE_API_URL=https://localhost:7214
+VITE_API_URL=https://localhost:5001
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key
 ```
 
@@ -149,6 +149,7 @@ dotnet ef database update
 ```
 
 The database will be automatically seeded with sample data on first run, including:
+
 - 18 anime character figures (Dragon Ball, Naruto, One Piece)
 - 2 test users (bob@test.com and admin@test.com)
 - Default password for test accounts: `Pa$$w0rd`
@@ -164,18 +165,22 @@ dotnet ef database update
 
 ### Base URL
 
-- **Development**: `https://localhost:7214/api`
+- **Development**: `https://localhost:5001/api`
 - **Production**: `https://your-domain.com/api`
 
 ### Authentication
 
-APex Store uses cookie-based authentication with ASP.NET Core Identity.
+APex Store uses JWT Bearer tokens for authentication.
+
+```http
+Authorization: Bearer <your-jwt-token>
+```
 
 ### Swagger UI
 
 Access interactive API documentation at:
 
-- **Development**: `https://localhost:7214/swagger`
+- **Development**: `https://localhost:5001/swagger`
 
 ## 🛠️ Development
 
@@ -237,55 +242,30 @@ npm run lint
 
 ## 🚀 Deployment
 
-### Azure App Service Deployment
+### Production Build
 
-1. **Create Azure Resources**
+1. **Build Backend**
 
 ```bash
-# Create Resource Group
-az group create --name ApexStore-RG --location eastus
-
-# Create Azure SQL Server
-az sql server create --name apexstore-sql --resource-group ApexStore-RG --location eastus --admin-user sqladmin --admin-password YourPassword123!
-
-# Create Azure SQL Database
-az sql db create --resource-group ApexStore-RG --server apexstore-sql --name ApexStoreDB --service-objective S0
-
-# Create App Service Plan
-az appservice plan create --name ApexStore-Plan --resource-group ApexStore-RG --sku B1 --is-linux
-
-# Create Web App
-az webapp create --resource-group ApexStore-RG --plan ApexStore-Plan --name apexstore --runtime "DOTNET|9.0"
+cd API
+dotnet publish -c Release -o ./publish
 ```
 
-2. **Build and Deploy**
+2. **Build Frontend**
 
 ```bash
-# Build Frontend
 cd client
 npm run build
-
-# Publish Backend (includes frontend from wwwroot)
-cd ../API
-dotnet publish -c Release -o ./publish
-
-# Deploy to Azure App Service (via Azure CLI or VS Code)
-az webapp deployment source config-zip --resource-group ApexStore-RG --name apexstore --src ./publish.zip
 ```
 
-3. **Configure Production Settings**
+### Environment Configuration
 
-Update `appsettings.Production.json`:
+Update production settings in `appsettings.Production.json`:
 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=tcp:apexstore-sql.database.windows.net,1433;Initial Catalog=ApexStoreDB;Persist Security Info=False;User ID=sqladmin;Password=YourPassword123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-  },
-  "Cloudinary": {
-    "CloudName": "your_production_cloud_name",
-    "ApiKey": "your_production_api_key",
-    "ApiSecret": "your_production_api_secret"
+    "DefaultConnection": "your-production-connection-string"
   },
   "Stripe": {
     "PublishableKey": "pk_live_your_live_publishable_key",
@@ -293,13 +273,6 @@ Update `appsettings.Production.json`:
     "WebhookSecret": "whsec_your_live_webhook_secret"
   }
 }
-```
-
-4. **Configure App Service Settings**
-
-```bash
-# Set environment variables in Azure App Service
-az webapp config appsettings set --resource-group ApexStore-RG --name apexstore --settings ASPNETCORE_ENVIRONMENT="Production"
 ```
 
 ## 🧪 Testing
@@ -343,17 +316,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Anime Community**: For inspiration and feedback
+- **Anime/Manga Community**: For inspiration and feedback
 - **Open Source Libraries**: Thanks to all the amazing open-source projects
-- **Material-UI**: For beautiful React UI components
+- **Material Design**: For beautiful UI components
 - **Stripe**: For secure payment processing
-- **Cloudinary**: For reliable image hosting and management
-- **Microsoft Azure**: For robust cloud infrastructure
-- **Microsoft**: For excellent .NET and Entity Framework documentation
+- **Microsoft**: For excellent .NET documentation
 
 ---
 
-**Built with ❤️ for anime collectors and enthusiasts**
+**Built with ❤️ for the anime and manga community**
 
 [![GitHub stars](https://img.shields.io/github/stars/yourusername/apex-store?style=social)](https://github.com/yourusername/apex-store)
 [![GitHub forks](https://img.shields.io/github/forks/yourusername/apex-store?style=social)](https://github.com/yourusername/apex-store)

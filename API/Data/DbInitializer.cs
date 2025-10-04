@@ -30,8 +30,17 @@ public class DbInitializer
     // Seeds the database with initial data if it's empty.
     private static async Task SeedData(StoreContext context, UserManager<User> userManager)
     {
-        // Apply pending database migrations
-        context.Database.Migrate();
+        try
+        {
+            // Apply pending database migrations asynchronously
+            await context.Database.MigrateAsync();
+            Console.WriteLine("✅ Database migrations applied successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Database migration failed: {ex.Message}");
+            throw; // Re-throw to prevent app from starting with broken DB
+        }
 
         // Check if we have user in the db after db migrated
         if (!userManager.Users.Any())
@@ -58,8 +67,13 @@ public class DbInitializer
         }
 
         // Exit if products already exist (avoid duplicates)
-        if (context.Products.Any()) return;
+        if (context.Products.Any())
+        {
+            Console.WriteLine($"✅ Database already has {context.Products.Count()} products - skipping seed");
+            return;
+        }
 
+        Console.WriteLine("📦 Seeding products to database...");
         var products = new List<Product>
         {
             new() {
@@ -227,7 +241,16 @@ public class DbInitializer
         };
 
         // Save the changes to the database
-        context.Products.AddRange(products);
-        context.SaveChanges();
+        try
+        {
+            context.Products.AddRange(products);
+            await context.SaveChangesAsync();
+            Console.WriteLine($"✅ Successfully seeded {products.Count} products to database");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Failed to seed products: {ex.Message}");
+            throw;
+        }
     }
 }

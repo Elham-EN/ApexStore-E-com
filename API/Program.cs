@@ -33,8 +33,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
+            // Get allowed origins from configuration (supports both dev and production)
+            var allowedOrigins = builder.Configuration
+                .GetSection("AllowedOrigins")
+                .Get<string[]>() ?? ["https://localhost:3000", "https://localhost:7214"];
+
             // Allow this origin: React App Client to access the API
-            policy.WithOrigins("https://localhost:3000", "https://localhost:7214")
+            policy.WithOrigins(allowedOrigins)
                   .AllowCredentials() // ✅  Enable credentials (cookies)
                   .AllowAnyMethod()   // ✅  Allow all HTTP methods
                   .AllowAnyHeader();  // ✅ Allow all headers
